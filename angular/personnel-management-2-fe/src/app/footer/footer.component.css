@@ -1,0 +1,12 @@
+footer {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    border: solid 1px black;
+    height: 40px;
+}
+
+h6{
+    text-align: center;
+    margin: 1em;
+}
