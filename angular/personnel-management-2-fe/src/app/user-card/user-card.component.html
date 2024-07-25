@@ -1,1 +1,15 @@
-<p>user-card works!</p>
+
+<p-card header="User Last Name, User First Name" subheader="User Job Title" [style]="{ width: '360px', margin: '0.5em' }">
+    <ng-template pTemplate="header">
+       
+    </ng-template>
+    <p>
+        Lorem ipsum dolor sit amet...
+    </p>
+    <ng-template pTemplate="footer">
+        <div class="flex gap-3 mt-1">
+            <p-button label="Edit" severity="secondary" class="w-full" styleClass="w-full" />
+            
+        </div>
+    </ng-template>
+</p-card>
