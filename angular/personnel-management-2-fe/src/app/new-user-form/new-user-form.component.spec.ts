@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonModule } from 'primeng/button';
-import { NavComponent } from './nav.component';
 
-describe('NavComponent', () => {
-  let component: NavComponent;
-  let fixture: ComponentFixture<NavComponent>;
+import { NewUserFormComponent } from './new-user-form.component';
+
+describe('NewUserFormComponent', () => {
+  let component: NewUserFormComponent;
+  let fixture: ComponentFixture<NewUserFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavComponent, ButtonModule]
+      imports: [NewUserFormComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(NavComponent);
+    fixture = TestBed.createComponent(NewUserFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
