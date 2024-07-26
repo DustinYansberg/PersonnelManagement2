@@ -1,10 +1,9 @@
 
-<p-card header="User Last Name, User First Name" subheader="User Job Title" [style]="{ width: '360px', margin: '0.5em' }">
+<p-card header= "{{ user.lastName }} + {{ user.firstName }}" subheader="User Job Title" [style]="{ width: '360px', margin: '0.5em' }">
     <ng-template pTemplate="header">
-       
     </ng-template>
     <p>
-        Lorem ipsum dolor sit amet...
+        {{ user.userId }}
     </p>
     <ng-template pTemplate="footer">
         <div class="flex gap-3 mt-1">

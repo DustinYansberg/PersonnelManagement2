@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ButtonModule } from 'primeng/button';
+
 import { NavComponent } from './nav.component';
 
 describe('NavComponent', () => {
@@ -8,7 +8,7 @@ describe('NavComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavComponent, ButtonModule]
+      imports: [NavComponent]
     })
     .compileComponents();
 

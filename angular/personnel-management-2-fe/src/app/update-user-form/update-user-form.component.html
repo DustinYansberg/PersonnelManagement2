@@ -2,17 +2,37 @@
 
 <form>
     <div class="formLine">
-        <label for="userFirstName">User First Name: </label>
-        <input type="text" id="userFirstName" name="userFirstName" formControlName="userFirstName">
+        <label for="firstName">User First Name: </label>
+        <input type="text" id="firstName" name="firstName" [(ngModel)]="updatedUser.firstName">
     </div>
     <div class="formLine">
         <label for="userLastName">User Last Name: </label>
-        <input type="text" id="userLastName" name="userLastName" formControlName="userLastName">
+        <input type="text" id="userLastName" name="userLastName" [(ngModel)]="updatedUser.lastName">
     </div>
     <div class="formLine">
-        <label for="userJobTitle">User Job Title: </label>
-        <input type="text" id="userJobTitle" name="userJobTitle" formControlName="userJobTitle">
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="Username" [(ngModel)]="updatedUser.username">
+    </div>
+    <div class="formLine">
+        <label for="displayName">User Display Name: </label>
+        <input type="text" id="displayName" name="displayName" [(ngModel)]="updatedUser.displayName">
+    </div>
+    <div class="formLine">
+        <label for="email">User email: </label>
+        <input type="text" id="email" name="email" [(ngModel)]="updatedUser.email">
+    </div>
+    <div class="formLine">
+        <label for="managerId">Manager ID: </label>
+        <input type="number" id="mangerId" name="managerId" [(ngModel)]="updatedUser.managerId">
+    </div>
+    <div class="formLine">
+        <label for="type">User Type: </label>
+        <input type="text" id="type" name="type" [(ngModel)]="updatedUser.type">
+    </div>
+    <div class="formLine">
+        <label for="userId">User ID: </label>
+        <input type="number" id="userId" name="userId" [(ngModel)]="updatedUser.userId">
     </div>
 
-    <button class="button">Submit</button>
+    <button class="button"(click)="updateUser()">Submit</button>
 </form>
