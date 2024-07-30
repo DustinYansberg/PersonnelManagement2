@@ -17,7 +17,17 @@ users: User[] = [];
     this.getAllUsers();
   }
   getAllUsers(){
-    this.users = this.httpService.getAllUsers()
-    console.log(this.users);
+    this.users = this.httpService.getAllUsers();
+  }
+
+  deleteUser(userId: number){
+    this.httpService.deleteUser(userId)
+    //.subscribe(response =>
+    this.getAllUsers();
+  //)
+  }
+
+  processDeleteEvent(userId: number){
+    this.deleteUser(userId);
   }
 }

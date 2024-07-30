@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '../models/user';
 import { HttpService } from '../services/http.service';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-update-user-form',
@@ -14,12 +15,12 @@ export class UpdateUserFormComponent {
 
     user: User = new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
 
-    constructor(private httpService: HttpService){
+    constructor(private httpService: HttpService, private route: ActivatedRoute){
       this.getUserById();
     }
 
     getUserById(){
-      this.user = this.httpService.getUserById();
+      this.user = this.httpService.getUserById(this.route.snapshot.params['id']);
     }
 
     updatedUser: User = new User(0, "", "", "", "","",0,"")

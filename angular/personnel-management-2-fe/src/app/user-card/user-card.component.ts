@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { User } from '../models/user';
@@ -18,10 +18,13 @@ export class UserCardComponent {
 
   @Input() user: User = new User(0, "", "","","", "",0,"");
 
+  @Output() deleteUserEvent = new EventEmitter<number>();
+
   editUser(){
+    this.router.navigate(['update/'+this.user.userId])
     console.log("edit")
   }
   deleteUser(){
-    
+    this.deleteUserEvent.emit(this.user.userId);
   }
 }

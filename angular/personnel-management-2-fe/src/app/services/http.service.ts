@@ -19,7 +19,8 @@ export class HttpService {
   }
 
   //get by id
-  getUserById(){
+  getUserById(id: number){
+    console.log(id);
     return new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
   }
 

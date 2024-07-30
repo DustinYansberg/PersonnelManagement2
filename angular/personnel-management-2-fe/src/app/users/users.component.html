@@ -1,6 +1,7 @@
 <h3>Users:</h3>
 <div class="cards">
 @for(user of users; track $index){
-<app-user-card [user]="user"></app-user-card>
+<app-user-card [user]="user"
+(deleteUserEvent)="processDeleteEvent($any($event))"></app-user-card>
 }
 </div>
