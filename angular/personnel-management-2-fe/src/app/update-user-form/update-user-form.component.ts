@@ -25,6 +25,6 @@ export class UpdateUserFormComponent {
     updatedUser: User = new User(0, "", "", "", "","",0,"")
 
     updateUser(){
-      console.log(this.updatedUser)
+      this.httpService.updateUser(this.updatedUser)
     }
 }

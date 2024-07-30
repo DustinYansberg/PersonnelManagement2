@@ -3,6 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { User } from '../models/user';
 import { Router } from '@angular/router';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-user-card',
@@ -13,8 +14,14 @@ import { Router } from '@angular/router';
 })
 export class UserCardComponent {
 
-  constructor(private router:Router){}
+  constructor(private router:Router, private htttpService: HttpService){}
 
   @Input() user: User = new User(0, "", "","","", "",0,"");
 
+  editUser(){
+    console.log("edit")
+  }
+  deleteUser(){
+    
+  }
 }
