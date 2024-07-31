@@ -11,7 +11,4 @@ import com.personnelmgmt2.models.Identity;
 @Repository
 public interface IdentityRepository extends CrudRepository<Identity, String>{
 	
-	//	TODO Test custom queries
-	@Query(value = "SELECT * FROM spt_identity", nativeQuery = true)
-	Collection<Identity> getAllIdentities();
 }
