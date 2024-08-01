@@ -10,11 +10,12 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ErrorPipe } from '../pipes/error.pipe';
 
 @Component({
   selector: 'app-update-user-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe],
   templateUrl: './update-user-form.component.html',
   styleUrl: './update-user-form.component.css',
 })
@@ -27,6 +28,7 @@ export class UpdateUserFormComponent {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
+    this.getUserById();
     this.updateUserForm = this.formBuilder.group({
       firstName: [
         '',
@@ -40,7 +42,7 @@ export class UpdateUserFormComponent {
       type: ['', Validators.required],
       userId: [0, Validators.required],
     });
-    this.getUserById();
+    
   }
 
   ngOnInit() {
@@ -74,7 +76,10 @@ export class UpdateUserFormComponent {
   }
 
   getUserById() {
-    this.user = this.httpService.getUserById(this.route.snapshot.params['id']);
+    this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
+      let item =resp.body;
+      this.user =new User(item.id, item.userName, item.name.givenName, item.name.familyName, item.displayName, item.emails.value, item.managerId, item.type);
+    });
   }
 
   updateUser() {

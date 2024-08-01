@@ -15,16 +15,11 @@ export class HttpService {
   //get all
   getAllUsers(): Observable<HttpResponse<any>>{
     return this.http.get(this.url+'identity', {observe: 'response'});
-  
-    // return [new User(0, "username", "firstname 1", "lastname 1", "displayname","email",0,"type"),
-    //   new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
-    // ]
   }
 
   //get by id
-  getUserById(id: number){
-    console.log(id);
-    return new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
+  getUserById(id: number): Observable<HttpResponse<any>>{
+    return this.http.get(this.url+'identity/'+id, {observe: 'response'});
   }
 
   //create user

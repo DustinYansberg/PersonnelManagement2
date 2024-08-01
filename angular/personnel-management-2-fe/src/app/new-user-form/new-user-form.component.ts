@@ -3,12 +3,13 @@ import { Component} from '@angular/core';
 import { FormBuilder, FormGroup,  FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpService } from '../services/http.service';
 import { User } from '../models/user';
+import { ErrorPipe } from '../pipes/error.pipe';
 
 
 @Component({
   selector: 'app-new-user-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe],
   templateUrl: './new-user-form.component.html',
   styleUrl: './new-user-form.component.css'
 })

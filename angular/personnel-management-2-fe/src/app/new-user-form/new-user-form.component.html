@@ -43,7 +43,7 @@
   </div>
   <div class="formLine">
     <label for="managerId">Manager ID: </label>
-    <input type="number" id="mangerId" name="managerId" formControlName="managerId"/>
+    <input type="number" min="0" id="mangerId" name="managerId" formControlName="managerId"/>
   </div>
   <div class="formLine">
     <label for="type">User Type: </label>
@@ -51,7 +51,7 @@
   </div>
   <div class="formLine">
     <label for="userId">User ID: </label>
-    <input type="number" id="userId" name="userId" formControlName="userId"/>
+    <input type="number" min="0" id="userId" name="userId" formControlName="userId"/>
   </div>
 
   <button class="button" (click)="createUser()" [disabled]="newUserForm.invalid"
@@ -59,28 +59,44 @@
   
   <section id="errorMessages">
   @if(firstName?.touched || firstName?.dirty){
-    <p style="color: red">fn touched</p>
+    <div>
+        {{ firstName?.errors | error : 'User First Name' : 4}}
+    </div>
   }
   @if(lastName?.touched || lastName?.dirty){
-    <p style="color: red">ln touched</p>
+    <div>
+        {{ lastName?.errors | error : 'User Last Name' : 4}}
+    </div>
   }
   @if(username?.touched || username?.dirty){
-    <p style="color: red">un touched</p>
+    <div>
+        {{ username?.errors | error : 'Username' : 4}}
+    </div>
   }
   @if(displayName?.touched || displayName?.dirty){
-    <p style="color: red">dn touched</p>
+    <div>
+        {{ displayName?.errors | error : 'Displayname' : 4}}
+    </div>
   }
   @if(email?.touched || email?.dirty){
-    <p style="color: red">email touched</p>
+    <div>
+        {{ email?.errors | error : 'Email' : 4}}
+    </div>
   }
-  @if(managerId?.touched || managerId?.dirty){
-    <p style="color: red">manager touched</p>
-  }
+  <!-- @if(managerId?.touched || managerId?.dirty){
+    <div>
+        {{ firstName?.errors | error : 'User First Name' : 4}}
+    </div>
+  } -->
   @if(type?.touched || type?.dirty){
-    <p style="color: red">type touched</p>
+    <div>
+        {{ type?.errors | error : 'User Type' : 4}}
+    </div>
   }
-  @if(userId?.touched || userId?.dirty){
-    <p style="color: red">userid touched</p>
-  }
+  <!-- @if(userId?.touched || userId?.dirty){
+    <div>
+        {{ userId?.errors }}
+    </div>
+  } -->
   </section>
 </form>
