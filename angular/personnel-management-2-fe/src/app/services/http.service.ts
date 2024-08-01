@@ -34,6 +34,6 @@ export class HttpService {
   }
 
   deleteUser(id: number){
-    console.log("delete user")
+    console.log("delete user " + id)
   }
 }
