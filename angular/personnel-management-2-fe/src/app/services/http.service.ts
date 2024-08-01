@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,15 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  url: String ='http://localhost:8080/';
+  url: String ='http://localhost:8081/';
 
   //get all
-  getAllUsers(){
-    return [new User(0, "username", "firstname 1", "lastname 1", "displayname","email",0,"type"),
-      new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
-    ]
+  getAllUsers(): Observable<HttpResponse<any>>{
+    return this.http.get(this.url+'identity', {observe: 'response'});
+  
+    // return [new User(0, "username", "firstname 1", "lastname 1", "displayname","email",0,"type"),
+    //   new User(0, "username", "firstname 2", "lastname 2", "displayname","email",0,"type")
+    // ]
   }
 
   //get by id

@@ -17,7 +17,18 @@ users: User[] = [];
     this.getAllUsers();
   }
   getAllUsers(){
-    this.users = this.httpService.getAllUsers();
+    //this.users = this.httpService.getAllUsers();
+    this.httpService.getAllUsers().subscribe(resp=>{
+      this.users = [];
+      for (let item of resp.body['Resources']){
+        console.log
+        //if(item.name.givenName){
+        this.users.push(
+          new User(item.id, item.userName, item.name.givenName, item.name.familyName, item.displayName, item.emails.value, item.managerId, item.type)
+        );
+     // }
+      }
+  })
   }
 
   deleteUser(userId: number){

@@ -21,8 +21,7 @@ export class UserCardComponent {
   @Output() deleteUserEvent = new EventEmitter<number>();
 
   editUser(){
-    this.router.navigate(['update/'+this.user.userId])
-    console.log("edit")
+    this.router.navigate(['update/'+this.user.userId]);
   }
   deleteUser(){
     this.deleteUserEvent.emit(this.user.userId);
