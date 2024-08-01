@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -22,7 +23,7 @@ public class IdentityController {
 	
 	@Value("${spring.datasource.username}") private String username;
 	@Value("${spring.datasource.password}") private String password;
-	@Value("${spring.datasource.url}") private String baseUrl;
+	@Value("${spring.datasource.url}/Users") private String baseUrl;
 	
 	private ResponseEntity<Object> sendRestTemplateExchange(String url, HttpMethod method) {
 		RestTemplate temp = new RestTemplate();
@@ -39,11 +40,17 @@ public class IdentityController {
 
 	@GetMapping
 	public ResponseEntity<Object> getAllIdentities() {
-		return sendRestTemplateExchange(baseUrl + "/Users", HttpMethod.GET);
+		return sendRestTemplateExchange(baseUrl, HttpMethod.GET);
 	}
 	
-//	@GetMapping("/{id}")
-//	public ResponseEntity<Object> getIdentityById(@PathVariable String id) {
-//		return sendRestTemplateExchange(baseUrl + "/Users", HttpMethod.GET)
-//	}
+	@GetMapping("/{id}")
+	public ResponseEntity<Object> getIdentityById(@PathVariable String id) {
+		return sendRestTemplateExchange(baseUrl + "/" + id, HttpMethod.GET);
+	}
+	
+	//	TODO Fix this one.
+	@PutMapping("/{id}")
+	public ResponseEntity<Object> updateIdentityById(@PathVariable String id) {
+		return sendRestTemplateExchange(baseUrl + "/" + id, HttpMethod.PUT);
+	}
 }
