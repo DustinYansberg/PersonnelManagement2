@@ -1,38 +1,83 @@
 <h2>Edit User</h2>
 
-<form>
-    <div class="formLine">
-        <label for="firstName">User First Name: </label>
-        <input type="text" id="firstName" name="firstName" [(ngModel)]="updatedUser.firstName">
-    </div>
-    <div class="formLine">
-        <label for="userLastName">User Last Name: </label>
-        <input type="text" id="userLastName" name="userLastName" [(ngModel)]="updatedUser.lastName">
-    </div>
-    <div class="formLine">
-        <label for="username">Username: </label>
-        <input type="text" id="username" name="Username" [(ngModel)]="updatedUser.username">
-    </div>
-    <div class="formLine">
-        <label for="displayName">User Display Name: </label>
-        <input type="text" id="displayName" name="displayName" [(ngModel)]="updatedUser.displayName">
-    </div>
-    <div class="formLine">
-        <label for="email">User email: </label>
-        <input type="text" id="email" name="email" [(ngModel)]="updatedUser.email">
-    </div>
-    <div class="formLine">
-        <label for="managerId">Manager ID: </label>
-        <input type="number" id="mangerId" name="managerId" [(ngModel)]="updatedUser.managerId">
-    </div>
-    <div class="formLine">
-        <label for="type">User Type: </label>
-        <input type="text" id="type" name="type" [(ngModel)]="updatedUser.type">
-    </div>
-    <div class="formLine">
-        <label for="userId">User ID: </label>
-        <input type="number" id="userId" name="userId" [(ngModel)]="updatedUser.userId">
-    </div>
+<form [formGroup]="updateUserForm">
+  <div class="formLine">
+    <label for="firstName">User First Name: </label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      formControlName="firstName"
+    />
+  </div>
+  <div class="formLine">
+    <label for="userLastName">User Last Name: </label>
+    <input
+      type="text"
+      id="userLastName"
+      name="userLastName"
+      formControlName="lastName"
+    />
+  </div>
+  <div class="formLine">
+    <label for="username">Username: </label>
+    <input
+      type="text"
+      id="username"
+      name="Username"
+      formControlName="username"
+    />
+  </div>
+  <div class="formLine">
+    <label for="displayName">User Display Name: </label>
+    <input
+      type="text"
+      id="displayName"
+      name="displayName"
+      formControlName="displayName"
+    />
+  </div>
+  <div class="formLine">
+    <label for="email">User email: </label>
+    <input type="text" id="email" name="email" formControlName="email" />
+  </div>
+  <div class="formLine">
+    <label for="managerId">Manager ID: </label>
+    <input
+      type="number"
+      id="mangerId"
+      name="managerId"
+      formControlName="managerId"
+    />
+  </div>
+  <div class="formLine">
+    <label for="type">User Type: </label>
+    <input type="text" id="type" name="type" formControlName="type" />
+  </div>
+  <div class="formLine">
+    <label for="userId">User ID: </label>
+    <input type="number" id="userId" name="userId" formControlName="userId" />
+  </div>
 
-    <button class="button"(click)="updateUser()">Submit</button>
+  <button class="button" (click)="updateUser()">Submit</button>
+
+  <section id="errorMessages">
+    @if(firstName?.touched || firstName?.dirty){
+    <p style="color: red">fn touched</p>
+    } @if(lastName?.touched || lastName?.dirty){
+    <p style="color: red">ln touched</p>
+    } @if(username?.touched || username?.dirty){
+    <p style="color: red">un touched</p>
+    } @if(displayName?.touched || displayName?.dirty){
+    <p style="color: red">dn touched</p>
+    } @if(email?.touched || email?.dirty){
+    <p style="color: red">email touched</p>
+    } @if(managerId?.touched || managerId?.dirty){
+    <p style="color: red">manager touched</p>
+    } @if(type?.touched || type?.dirty){
+    <p style="color: red">type touched</p>
+    } @if(userId?.touched || userId?.dirty){
+    <p style="color: red">userid touched</p>
+    }
+  </section>
 </form>
