@@ -19,6 +19,9 @@ export class ErrorPipe implements PipeTransform {
       if(value['minlength']){
         errorMessage=input + ' must be ' + length +' characters long!'
       }
+      if(value['email']){
+        errorMessage=input + ' must be follow xxx@xxx.com format'
+      }
     }
     
     //if no error, return blank (falsy) string

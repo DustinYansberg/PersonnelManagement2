@@ -60,9 +60,9 @@
     <input type="number" min="0" id="userId" name="userId" formControlName="userId" />
   </div>
 
-  <button class="button" (click)="updateUser()">Submit</button>
+  <button class="button" (click)="updateUser()" [disabled]="updateUserForm.invalid">Submit</button>
 
-  <section id="errorMessages">
+  <section id="errorMessages"> 
     @if(firstName?.touched || firstName?.dirty){
       <div>
           {{ firstName?.errors | error : 'User First Name' : 4}}

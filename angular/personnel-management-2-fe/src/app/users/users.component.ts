@@ -22,11 +22,11 @@ users: User[] = [];
       this.users = [];
       for (let item of resp.body['Resources']){
         console.log
-        //if(item.name.givenName){
+        if(item.name.givenName){
         this.users.push(
           new User(item.id, item.userName, item.name.givenName, item.name.familyName, item.displayName, item.emails.value, item.managerId, item.type)
         );
-     // }
+     }
       }
   })
   }

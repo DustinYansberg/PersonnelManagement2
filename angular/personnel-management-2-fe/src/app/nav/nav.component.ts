@@ -32,9 +32,6 @@ this.items = [{
   label: 'Create',
   // icon:'pi pi-fw pi-home',
   route: ['/create']
-},{
-  label: 'Update',
-  route:['/update']
 }]
   }
 }

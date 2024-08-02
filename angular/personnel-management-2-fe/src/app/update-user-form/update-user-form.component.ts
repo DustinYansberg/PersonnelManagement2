@@ -34,10 +34,10 @@ export class UpdateUserFormComponent {
         '',
         Validators.compose([Validators.required, Validators.minLength(4)]),
       ],
-      lastName: ['', Validators.required],
+      lastName: ['',Validators.compose([Validators.required, Validators.minLength(4)])],
       username: ['', Validators.required],
       displayName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
       managerId: [0, Validators.required],
       type: ['', Validators.required],
       userId: [0, Validators.required],
@@ -79,6 +79,7 @@ export class UpdateUserFormComponent {
     this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
       let item =resp.body;
       this.user =new User(item.id, item.userName, item.name.givenName, item.name.familyName, item.displayName, item.emails.value, item.managerId, item.type);
+      console.log(this.user);
     });
   }
 
