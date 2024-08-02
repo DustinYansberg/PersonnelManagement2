@@ -6,31 +6,48 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.personnelmgmt2.models.Identity;
 
 @RestController
 @RequestMapping("/identity") 
 @CrossOrigin(origins = "*") // TODO Cross-Origin security
 public class IdentityController {
-//	@Autowired private IdentityService service;
 	
 	@Value("${spring.datasource.username}") private String username;
 	@Value("${spring.datasource.password}") private String password;
 	@Value("${spring.datasource.url}/Users") private String baseUrl;
 	
-	private ResponseEntity<Object> sendRestTemplateExchange(String url, HttpMethod method) {
-		RestTemplate temp = new RestTemplate();
+	private HttpHeaders generateAuthHeaders() {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes()));
-		HttpEntity<String> entity = new HttpEntity<>(headers);
+		return headers;
+	}
+	
+	private ResponseEntity<Object> sendRestTemplateExchange(Object body, String url, HttpMethod method) {
+		RestTemplate temp = new RestTemplate();
+		HttpEntity<Object> entity = new HttpEntity<>(body, generateAuthHeaders());
 		return temp.exchange(url, method, entity, Object.class);
+	}
+	
+	private ResponseEntity<Object> processError(Exception e) {
+		//	TODO There is probably a way to formally extract error code from exception message
+		int errorCode = Integer.parseInt(e.getMessage().substring(0, 3));
+		System.out.println("\n\nEXCEPTION:\n" + errorCode);
+		return ResponseEntity.status(HttpStatus.valueOf(errorCode)).header("Error", "SCIM Error " + errorCode)
+				.body("An error occurred when sending the request to SCIM:\n" + e);
 	}
 	
 	@GetMapping("/test")
@@ -40,17 +57,47 @@ public class IdentityController {
 
 	@GetMapping
 	public ResponseEntity<Object> getAllIdentities() {
-		return sendRestTemplateExchange(baseUrl, HttpMethod.GET);
+		try {
+			return sendRestTemplateExchange(null, baseUrl, HttpMethod.GET);
+		} catch(Exception e) {return processError(e);}
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getIdentityById(@PathVariable String id) {
-		return sendRestTemplateExchange(baseUrl + "/" + id, HttpMethod.GET);
+		try {
+			return sendRestTemplateExchange(null, baseUrl + "/" + id, HttpMethod.GET);
+		} catch(Exception e) {return processError(e);}
 	}
 	
-	//	TODO Fix this one.
+	//	FIXME 400 Attribute 'userName' is required, but userName is provided in identity
+	@PostMapping
+	public ResponseEntity<Object> createIdentity(@RequestBody Identity identity) {
+		RestTemplate temp = new RestTemplate();
+		//	Adding headers does not solve the problem
+		HttpHeaders headers = generateAuthHeaders();
+		headers.add("userName", identity.getUsername());
+		HttpEntity<Object> entity = new HttpEntity<>(identity, headers);
+		System.out.println(identity);
+		try {
+			return temp.exchange(baseUrl, HttpMethod.POST, entity, Object.class);
+		} catch(Exception e) {return processError(e);}
+//		return sendRestTemplateExchange(identity, baseUrl, HttpMethod.POST);
+	}
+	
+	//	FIXME Same issue as POST
 	@PutMapping("/{id}")
-	public ResponseEntity<Object> updateIdentityById(@PathVariable String id) {
-		return sendRestTemplateExchange(baseUrl + "/" + id, HttpMethod.PUT);
+	public ResponseEntity<Object> updateIdentityById(@PathVariable String id,
+													@RequestBody Identity newFields) {
+		try {
+			return sendRestTemplateExchange(newFields, baseUrl + "/" + id, HttpMethod.PUT);
+		} catch(Exception e) {return processError(e);}
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Object> deleteIdentityById(@PathVariable String id) {
+		//	SCIM DELETE does not return anything
+		try {
+			return sendRestTemplateExchange(null, baseUrl + "/" + id, HttpMethod.DELETE);
+		} catch(Exception e) {return processError(e);}
 	}
 }
