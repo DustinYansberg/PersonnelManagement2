@@ -50,6 +50,7 @@ public class IdentityController {
 				.body("An error occurred when sending the request to SCIM:\n" + e);
 	}
 	
+	
 	@GetMapping("/test")
 	public ResponseEntity<String> testConnection() {
 		return ResponseEntity.status(418).body("Connection successful.");
