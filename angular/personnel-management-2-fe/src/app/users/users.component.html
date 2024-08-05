@@ -1,4 +1,11 @@
 <h3>Users:</h3>
+<p>Filter by:</p>
+<p-button (click)="sortLast()" label="Last Name" severity="secondary" class="w-full" styleClass="w-full" />
+<p-button (click)="sortFirst()" label="First Name" severity="secondary" class="w-full" styleClass="w-full" />
+<label for="search">Search: </label>
+<input type="text" pInputText [(ngModel)]="searchStr" id="search" name="search" />
+<p-button (click)="search()" label="Search" severity="secondary" class="w-full" styleClass="w-full" />
+<p-button (click)="reset()" label="Reset" severity="secondary" class="w-full" styleClass="w-full" />
 <div class="cards">
 @for(user of users; track $index){
 <app-user-card [user]="user"

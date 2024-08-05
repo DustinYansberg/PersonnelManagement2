@@ -5,6 +5,7 @@ import { HttpService } from '../services/http.service';
 import { User } from '../models/user';
 import { ErrorPipe } from '../pipes/error.pipe';
 import { Button, ButtonModule } from 'primeng/button';
+import { FloatLabel } from 'primeng/floatlabel';
 
 
 
