@@ -11,11 +11,12 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ErrorPipe } from '../pipes/error.pipe';
+import { Button } from 'primeng/button';
 
 @Component({
   selector: 'app-update-user-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe, Button],
   templateUrl: './update-user-form.component.html',
   styleUrl: './update-user-form.component.css',
 })
@@ -85,6 +86,6 @@ export class UpdateUserFormComponent {
 
   updateUser() {
     // console.log(this.user);
-    this.httpService.updateUser(this.user);
+    this.httpService.updateUser(this.updateUserForm.value);
   }
 }

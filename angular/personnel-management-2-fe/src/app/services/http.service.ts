@@ -12,12 +12,12 @@ export class HttpService {
 
   url: String ='http://localhost:8081/';
 
-  //get all
+  //get all users
   getAllUsers(): Observable<HttpResponse<any>>{
     return this.http.get(this.url+'identity', {observe: 'response'});
   }
 
-  //get by id
+  //get user by id
   getUserById(id: number): Observable<HttpResponse<any>>{
     return this.http.get(this.url+'identity/'+id, {observe: 'response'});
   }
@@ -27,11 +27,14 @@ export class HttpService {
     console.log("create user request", user)
   }
 
+  //Edit user
   updateUser(user: User){
     console.log("update user request", user)
   }
 
-  deleteUser(id: number){
+  //delete user by ID
+  deleteUser(id: number): Observable<HttpResponse<any>>{
     console.log("delete user " + id)
+    return this.http.delete(this.url +'identity/' + id, {observe: 'response'});
   }
 }

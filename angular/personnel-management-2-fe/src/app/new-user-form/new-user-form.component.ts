@@ -4,12 +4,14 @@ import { FormBuilder, FormGroup,  FormsModule, ReactiveFormsModule, Validators }
 import { HttpService } from '../services/http.service';
 import { User } from '../models/user';
 import { ErrorPipe } from '../pipes/error.pipe';
+import { Button, ButtonModule } from 'primeng/button';
+
 
 
 @Component({
   selector: 'app-new-user-form',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, ErrorPipe, Button],
   templateUrl: './new-user-form.component.html',
   styleUrl: './new-user-form.component.css'
 })

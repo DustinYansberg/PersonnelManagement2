@@ -3,39 +3,19 @@
 <form [formGroup]="newUserForm">
   <div class="formLine">
     <label for="firstName">User First Name: </label>
-    <input
-      type="text"
-      id="firstName"
-      name="firstName"
-      formControlName="firstName"
-    />
+    <input type="text" id="firstName" name="firstName" formControlName="firstName" />
   </div>
   <div class="formLine">
     <label for="lastName">User Last Name: </label>
-    <input
-      type="text"
-      id="lastName"
-      name="lastName"
-      formControlName="lastName"
-    />
+    <input type="text" id="lastName" name="lastName" formControlName="lastName" />
   </div>
   <div class="formLine">
     <label for="username">Username: </label>
-    <input
-      type="text"
-      id="username"
-      name="Username"
-      formControlName="username"
-    />
+    <input type="text" id="username" name="Username" formControlName="username" />
   </div>
   <div class="formLine">
     <label for="displayName">User Display Name: </label>
-    <input
-      type="text"
-      id="displayName"
-      name="displayName"
-      formControlName="displayName"
-    />
+    <input type="text" id="displayName" name="displayName" formControlName="displayName" />
   </div>
   <div class="formLine">
     <label for="email">User email: </label>
@@ -43,60 +23,59 @@
   </div>
   <div class="formLine">
     <label for="managerId">Manager ID: </label>
-    <input type="number" min="0" id="mangerId" name="managerId" formControlName="managerId"/>
+    <input type="number" min="0" id="mangerId" name="managerId" formControlName="managerId" />
   </div>
   <div class="formLine">
     <label for="type">User Type: </label>
-    <input type="text" id="type" name="type" formControlName="type"/>
+    <input type="text" id="type" name="type" formControlName="type" />
   </div>
   <div class="formLine">
     <label for="userId">User ID: </label>
-    <input type="number" min="0" id="userId" name="userId" formControlName="userId"/>
+    <input type="number" min="0" id="userId" name="userId" formControlName="userId" />
   </div>
 
-  <button class="button" (click)="createUser()" [disabled]="newUserForm.invalid"
-  >Submit</button>
-  
-  <section id="errorMessages">
-  @if(firstName?.touched || firstName?.dirty){
-    <div>
+  <p-button label="Submit" severity="primary" class="button" (click)="createUser()" [disabled]="newUserForm.invalid"/>
+
+    <section id="errorMessages">
+      @if(firstName?.touched || firstName?.dirty){
+      <div>
         {{ firstName?.errors | error : 'User First Name' : 4}}
-    </div>
-  }
-  @if(lastName?.touched || lastName?.dirty){
-    <div>
+      </div>
+      }
+      @if(lastName?.touched || lastName?.dirty){
+      <div>
         {{ lastName?.errors | error : 'User Last Name' : 4}}
-    </div>
-  }
-  @if(username?.touched || username?.dirty){
-    <div>
+      </div>
+      }
+      @if(username?.touched || username?.dirty){
+      <div>
         {{ username?.errors | error : 'Username' : 4}}
-    </div>
-  }
-  @if(displayName?.touched || displayName?.dirty){
-    <div>
+      </div>
+      }
+      @if(displayName?.touched || displayName?.dirty){
+      <div>
         {{ displayName?.errors | error : 'Displayname' : 4}}
-    </div>
-  }
-  @if(email?.touched || email?.dirty){
-    <div>
+      </div>
+      }
+      @if(email?.touched || email?.dirty){
+      <div>
         {{ email?.errors | error : 'Email' : 4}}
-    </div>
-  }
-  <!-- @if(managerId?.touched || managerId?.dirty){
+      </div>
+      }
+      <!-- @if(managerId?.touched || managerId?.dirty){
     <div>
         {{ firstName?.errors | error : 'User First Name' : 4}}
     </div>
   } -->
-  @if(type?.touched || type?.dirty){
-    <div>
+      @if(type?.touched || type?.dirty){
+      <div>
         {{ type?.errors | error : 'User Type' : 4}}
-    </div>
-  }
-  <!-- @if(userId?.touched || userId?.dirty){
+      </div>
+      }
+      <!-- @if(userId?.touched || userId?.dirty){
     <div>
         {{ userId?.errors }}
     </div>
   } -->
-  </section>
+    </section>
 </form>

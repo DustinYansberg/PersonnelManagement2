@@ -60,7 +60,7 @@
     <input type="number" min="0" id="userId" name="userId" formControlName="userId" />
   </div>
 
-  <button class="button" (click)="updateUser()" [disabled]="updateUserForm.invalid">Submit</button>
+  <p-button label="Submit" severity="primary" class="button" (click)="updateUser()" [disabled]="updateUserForm.invalid"/>
 
   <section id="errorMessages"> 
     @if(firstName?.touched || firstName?.dirty){
