@@ -74,6 +74,9 @@ public class IdentityController {
 		} catch(Exception e) {return processError(e, "createIdentity()");}
 	}
 	
+	//	FIXME Update returns unspecified fields to null, could fix this by GET-ing the user first
+	//		and then replacing existing information in string with new information
+	//	TODO Test remote
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateIdentityById(@PathVariable String id,
 													@RequestBody Identity newFields) {

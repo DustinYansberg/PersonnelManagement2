@@ -10,10 +10,10 @@ public class Identity {
 	String firstName;
 	String lastName;
 	String email;
-	String manager;
+//	String manager;
 	String managerId;
 	String softwareVersion;
-	String administrator;
+//	String administrator;
 	String administratorId;
 	String displayName;
 	boolean active;		//	If the user is an administrator or not. May not need this.
@@ -21,7 +21,7 @@ public class Identity {
 	String department;
 	
 	public Identity(String userName, String password, String firstName, String lastName, String email,
-			String manager, String managerId, String softwareVersion, String administrator, String administratorId,
+			/*String manager,*/ String managerId, String softwareVersion, /*String administrator,*/ String administratorId,
 			String displayName, boolean active, String userType, String department) {
 		super();
 		this.userName = userName;
@@ -29,10 +29,10 @@ public class Identity {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.manager = manager;	//	May not matter, as long as you have the ID.
+//		this.manager = manager;	//	May not matter, as long as you have the ID.
 		this.managerId = managerId;
 		this.softwareVersion = softwareVersion;
-		this.administrator = administrator;
+//		this.administrator = administrator;
 		this.administratorId = administratorId;
 		this.displayName = displayName;
 		this.active = active;
@@ -65,22 +65,22 @@ public class Identity {
 				+ "  ],\r\n"
 				+ "  \"urn:ietf:params:scim:schemas:sailpoint:1.0:User\": {\r\n";
 
-		if(administrator != null && administratorId != null)
+		if(/*administrator != null && */administratorId != null)
 			asJson = asJson
 				+ "    \"administrator\": {\r\n"
-				+ "      \"displayName\": \"" + administrator + "\",\r\n"
+//				+ "      \"displayName\": \"" + administrator + "\",\r\n"
 				+ "      \"value\": \"" + administratorId + "\",\r\n"
-				+ "      \"$ref\": \"" + baseUrl + "/Users/" + administratorId + "\"\r\n" 
+				+ "      \"$ref\": \"" + baseUrl + "/" + administratorId + "\"\r\n" 
 				+ "    },\r\n";
 		asJson = asJson
 				+ "    \"softwareVersion\": \"" + softwareVersion + "\",\r\n"
 				+ "    \"Department\": \"" + department + "\"\r\n"
 				+ "  },\r\n";
-		if(manager != null && managerId != null)
+		if(/*manager != null && */managerId != null)
 			asJson = asJson
 				+ "  \"urn:ietf:params:scim:schemas:extension:enterprise:2.0:User\": {\r\n"
 				+ "    \"manager\": {\r\n"
-				+ "      \"displayName\": \"" + manager + "\",\r\n"
+//				+ "      \"displayName\": \"" + manager + "\",\r\n"
 				+ "      \"value\": \"" + managerId + "\",\r\n"
 				+ "      \"$ref\": \"" + baseUrl + "/" + managerId + "\"\r\n" 
 				+ "    }\r\n"
