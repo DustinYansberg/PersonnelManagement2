@@ -25,7 +25,11 @@
   </div>
   <div class="formLine">
     <label for="managerId">Manager ID: </label>
-    <input type="number" min="0" id="mangerId" name="managerId" formControlName="managerId" />
+    <input type="string" id="mangerId" name="managerId" formControlName="managerId" />
+  </div>
+  <div class="formLine">
+    <label for="manager">Manager: </label>
+    <input type="string" id="manager" name="manager" formControlName="manager" />
   </div>
   <div class="formLine">
     <label for="type">User Type: </label>
@@ -34,6 +38,31 @@
   <div class="formLine">
     <label for="userId">User ID: </label>
     <input type="number" min="0" id="userId" name="userId" formControlName="userId" />
+  </div>
+  <div class="formLine">
+    <label for="password">Password: </label>
+    <input type="string" id="password" name="password" formControlName="password" />
+  </div>
+  <div class="formLine">
+    <label for="softwareVersion">Software Version: </label>
+    <input type="string" id="softwareVersion" name="softwareVersion" formControlName="softwareVersion" />
+  </div>
+  <div class="formLine">
+    <label for="administrator">Administrator: </label>
+    <input type="string" id="administrator" name="administrator" formControlName="administrator" />
+  </div>
+  <div class="formLine">
+    <label for="administratorId">Administrator ID: </label>
+    <input type="string" id="administratorId" name="administratorId" formControlName="administratorId" />
+  </div>
+  <div class="formLine">
+    <label for="active">Active: </label>
+    <input type="p-button" id="active" name="active" formControlName="active" />
+    <!-- <p-radioButton formControlName="active" variant="filled" /> -->
+  </div>
+  <div class="formLine">
+    <label for="department">Department: </label>
+    <input type="string" id="department" name="department" formControlName="department" />
   </div>
 
   <p-button label="Submit" severity="primary" class="button" (click)="createUser()" [disabled]="newUserForm.invalid"/>

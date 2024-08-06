@@ -5,7 +5,6 @@ import { HttpService } from '../services/http.service';
 import { User } from '../models/user';
 import { ErrorPipe } from '../pipes/error.pipe';
 import { Button, ButtonModule } from 'primeng/button';
-import { FloatLabel } from 'primeng/floatlabel';
 
 
 
@@ -19,24 +18,28 @@ import { FloatLabel } from 'primeng/floatlabel';
 export class NewUserFormComponent {
 
   newUserForm: FormGroup;
-  user: User = new User(0, '', '', '', '', '', 0, '');
+  user: User = new User('', '', '', '', '', '', '', '', '', '', '','','',true,'');
 
   constructor(
     private httpService: HttpService,
     private formBuilder: FormBuilder
   ) {
     this.newUserForm = this.formBuilder.group({
-      firstName: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(4)]),
-      ],
+      firstName: ['',Validators.compose([Validators.required, Validators.minLength(4)]),],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       username: ['', Validators.required],
       displayName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      managerId: [0, Validators.required],
+      managerId: ['', Validators.required],
+      manager: ['', Validators.required],
       type: ['', Validators.required],
-      userId: [0, Validators.required],
+      userId: ['', Validators.required],
+      password: ['', Validators.required],
+      softwareVersion: ['', Validators.required],
+      administrator: ['', Validators.required],
+      administratorId: ['', Validators.required],
+      active: [true, Validators.required],
+      department: ['', Validators.required],
     });
   }
   get firstName(){
@@ -57,11 +60,32 @@ export class NewUserFormComponent {
   get managerId(){
     return this.newUserForm.get('managerId');
   }
+  get manager(){
+    return this.newUserForm.get('manager');
+  }
   get type(){
     return this.newUserForm.get('type');
   }
   get userId(){
     return this.newUserForm.get('userId');
+  }
+  get password(){
+    return this.newUserForm.get('password');
+  }
+  get softwareVersion(){
+    return this.newUserForm.get('softwareVersion');
+  }
+  get aministrator(){
+    return this.newUserForm.get('administrator');
+  }
+  get aministratorId(){
+    return this.newUserForm.get('administratorId');
+  }
+  get active(){
+    return this.newUserForm.get('active');
+  }
+  get department(){
+    return this.newUserForm.get('department');
   }
 
   ngOnInit() {

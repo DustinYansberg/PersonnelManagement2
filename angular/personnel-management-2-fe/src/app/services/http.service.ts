@@ -18,7 +18,7 @@ export class HttpService {
   }
 
   //get user by id
-  getUserById(id: number): Observable<HttpResponse<any>>{
+  getUserById(id: string): Observable<HttpResponse<any>>{
     return this.http.get(this.url+'identity/'+id, {observe: 'response'});
   }
 
@@ -33,7 +33,7 @@ export class HttpService {
   }
 
   //delete user by ID
-  deleteUser(id: number): Observable<HttpResponse<any>>{
+  deleteUser(id: string): Observable<HttpResponse<any>>{
     console.log("delete user " + id)
     return this.http.delete(this.url +'identity/' + id, {observe: 'response'});
   }

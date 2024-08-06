@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { InputText } from 'primeng/inputtext';
+import { PrimeIcons } from 'primeng/api';
+import { RadioButton } from 'primeng/radiobutton';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import { InputText } from 'primeng/inputtext';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    InputText
+    InputText,
+    PrimeIcons,
+    RadioButton
   ],
   providers: [],
   bootstrap: [AppComponent]

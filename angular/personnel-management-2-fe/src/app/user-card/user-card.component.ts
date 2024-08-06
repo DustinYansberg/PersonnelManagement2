@@ -16,9 +16,9 @@ export class UserCardComponent {
 
   constructor(private router:Router, private htttpService: HttpService){}
 
-  @Input() user: User = new User(0, "", "","","", "",0,"");
+  @Input() user: User = new User('', '', '', '', '', '', '', '', '', '', '','','',true,'');
 
-  @Output() deleteUserEvent = new EventEmitter<number>();
+  @Output() deleteUserEvent = new EventEmitter<string>();
 
   editUser(){
     this.router.navigate(['update/'+this.user.userId]);

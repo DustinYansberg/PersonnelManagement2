@@ -4,7 +4,7 @@ import { HttpService } from '../services/http.service';
 import { User } from '../models/user';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
-import { FilterService } from 'primeng/api';
+import { FilterService, PrimeIcons } from 'primeng/api';
 
 
 @Component({
@@ -26,47 +26,62 @@ searchStr: string = '';
     this.httpService.getAllUsers().subscribe(resp=>{
       this.users = [];
       for (let item of resp.body['Resources']){
-        console.log
         if(item.name.givenName){
+          const dynamicKey = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
+          const adminValue = item[dynamicKey];
+          const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
+          const managerValue = item[dynamicKey2];
         this.users.push(
-          new User(item.id, item.userName, item.name.givenName, item.name.familyName, item.displayName, item.emails.value, item.managerId, item.type)
+          new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department')
         );
      }
       }
   })
   }
 
-  deleteUser(userId: number){
+  deleteUser(userId: string){
     this.httpService.deleteUser(userId)
     //.subscribe(response =>
     this.getAllUsers();
   //)
   }
 
-  processDeleteEvent(userId: number){
+  processDeleteEvent(userId: string){
     this.deleteUser(userId);
   }
 
   //Sorting
-  sortLast(){
+  sortLastAZ(){
     this.users = this.users.sort((a,b) =>
       a.lastName.localeCompare(b.lastName)
     );
   }
 
-  sortFirst(){
+  sortLastZA(){
+    this.users = this.users.sort((a,b) =>
+      b.lastName.localeCompare(a.lastName)
+    );
+  }
+
+  sortFirstAZ(){
     this.users = this.users.sort((a,b) =>
       a.firstName.localeCompare(b.firstName)
     );
   }
 
+  sortFirstZA(){
+    this.users = this.users.sort((a,b) =>
+      b.firstName.localeCompare(a.firstName)
+    );
+  }
+
 
   search(){
-    let str = this.searchStr
-    this.users =this.users.filter(user => {
-      return user.firstName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase()) 
-      || user.lastName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase()) 
-    });
+    // let str = this.searchStr
+    // this.users =this.users.filter(user => {
+    //   return user.firstName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase()) 
+    //   || user.lastName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase()) 
+    // });
   }
   reset(){
     this.getAllUsers();

@@ -1,14 +1,22 @@
 <h3>Users:</h3>
-<p>Filter by:</p>
-<p-button (click)="sortLast()" label="Last Name" severity="secondary" class="w-full" styleClass="w-full" />
-<p-button (click)="sortFirst()" label="First Name" severity="secondary" class="w-full" styleClass="w-full" />
+<p>Order By:</p>
+<p-button (click)="sortLastAZ()" label="Last Name A-Z" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+<p-button (click)="sortLastZA()" label="Last Name Z-A" severity="primary" class="w-full" styleClass="w-full" [rounded]="true"/>
+<p-button (click)="sortFirstAZ()" label="First Name A-Z" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+<p-button (click)="sortFirstZA()" label="First Name Z-A" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+<hr>
 <label for="search">Search: </label>
 <input type="text" pInputText [(ngModel)]="searchStr" id="search" name="search" />
-<p-button (click)="search()" label="Search" severity="secondary" class="w-full" styleClass="w-full" />
-<p-button (click)="reset()" label="Reset" severity="secondary" class="w-full" styleClass="w-full" />
+<!-- <p-button (click)="search()" label="Search" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+<p-button (click)="reset()" label="Reset" severity="primary" class="w-full" styleClass="w-full" [rounded]="true"/> -->
 <div class="cards">
 @for(user of users; track $index){
+    @if(user.firstName.toLocaleLowerCase().startsWith(searchStr.toLocaleLowerCase()) 
+    || user.lastName.toLocaleLowerCase().startsWith(searchStr.toLocaleLowerCase())){
 <app-user-card [user]="user"
 (deleteUserEvent)="processDeleteEvent($any($event))"></app-user-card>
+    }
 }
 </div>
+
+
