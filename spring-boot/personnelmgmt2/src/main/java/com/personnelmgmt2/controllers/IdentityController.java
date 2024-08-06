@@ -42,10 +42,10 @@ public class IdentityController {
 		return temp.exchange(url, method, entity, Object.class);
 	}
 	
-	private ResponseEntity<Object> processError(Exception e) {
+	private ResponseEntity<Object> processError(Exception e, String fromMethod) {
 		//	TODO There is probably a way to formally extract error code from exception message
 		int errorCode = Integer.parseInt(e.getMessage().substring(0, 3));
-		System.out.println("\n\nEXCEPTION:\n" + errorCode);
+		System.out.println("\n\nEXCEPTION IN " + fromMethod + ": " + errorCode);
 		return ResponseEntity.status(HttpStatus.valueOf(errorCode)).header("Error", "SCIM Error " + errorCode)
 				.body("An error occurred when sending the request to SCIM:\n" + e);
 	}
@@ -60,29 +60,21 @@ public class IdentityController {
 	public ResponseEntity<Object> getAllIdentities() {
 		try {
 			return sendRestTemplateExchange(null, baseUrl, HttpMethod.GET);
-		} catch(Exception e) {return processError(e);}
+		} catch(Exception e) {return processError(e, "getAllIdentities()");}
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Object> getIdentityById(@PathVariable String id) {
 		try {
 			return sendRestTemplateExchange(null, baseUrl + "/" + id, HttpMethod.GET);
-		} catch(Exception e) {return processError(e);}
+		} catch(Exception e) {return processError(e, "getIdentityById()");}
 	}
 	
-	//	FIXME 400 Attribute 'userName' is required, but userName is provided in identity
 	@PostMapping
 	public ResponseEntity<Object> createIdentity(@RequestBody Identity identity) {
-		RestTemplate temp = new RestTemplate();
-		//	Adding headers does not solve the problem
-		HttpHeaders headers = generateAuthHeaders();
-		headers.add("userName", identity.getUsername());
-		HttpEntity<Object> entity = new HttpEntity<>(identity, headers);
-		System.out.println(identity);
 		try {
-			return temp.exchange(baseUrl, HttpMethod.POST, entity, Object.class);
-		} catch(Exception e) {return processError(e);}
-//		return sendRestTemplateExchange(identity, baseUrl, HttpMethod.POST);
+			return sendRestTemplateExchange(identity, baseUrl, HttpMethod.POST);
+		} catch(Exception e) {return processError(e, "createIdentity()");}
 	}
 	
 	//	FIXME Same issue as POST
@@ -91,7 +83,7 @@ public class IdentityController {
 													@RequestBody Identity newFields) {
 		try {
 			return sendRestTemplateExchange(newFields, baseUrl + "/" + id, HttpMethod.PUT);
-		} catch(Exception e) {return processError(e);}
+		} catch(Exception e) {return processError(e, "updateIdentityById");}
 	}
 	
 	@DeleteMapping("/{id}")
@@ -99,6 +91,6 @@ public class IdentityController {
 		//	SCIM DELETE does not return anything
 		try {
 			return sendRestTemplateExchange(null, baseUrl + "/" + id, HttpMethod.DELETE);
-		} catch(Exception e) {return processError(e);}
+		} catch(Exception e) {return processError(e, "deleteIdentityById");}
 	}
 }
