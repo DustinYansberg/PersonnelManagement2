@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,9 +43,7 @@ public class IdentityController {
 	
 	private ResponseEntity<Object> processError(Exception e, String fromMethod) {
 		//	TODO There is probably a way to formally extract error code from exception message
-		int errorCode = Integer.parseInt(e.getMessage().substring(0, 3));
-		System.out.println("\n\nEXCEPTION IN " + fromMethod + ": " + errorCode);
-		return ResponseEntity.status(HttpStatus.valueOf(errorCode)).header("Error", "SCIM Error " + errorCode)
+		return ResponseEntity.status(500).header("Error", "SCIM Error " + e)
 				.body("An error occurred when sending the request to SCIM:\n" + e);
 	}
 	
@@ -73,16 +70,15 @@ public class IdentityController {
 	@PostMapping
 	public ResponseEntity<Object> createIdentity(@RequestBody Identity identity) {
 		try {
-			return sendRestTemplateExchange(identity, baseUrl, HttpMethod.POST);
+			return sendRestTemplateExchange(identity.toJsonString(), baseUrl, HttpMethod.POST);
 		} catch(Exception e) {return processError(e, "createIdentity()");}
 	}
 	
-	//	FIXME Same issue as POST
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateIdentityById(@PathVariable String id,
 													@RequestBody Identity newFields) {
 		try {
-			return sendRestTemplateExchange(newFields, baseUrl + "/" + id, HttpMethod.PUT);
+			return sendRestTemplateExchange(newFields.toJsonString(), baseUrl + "/" + id, HttpMethod.PUT);
 		} catch(Exception e) {return processError(e, "updateIdentityById");}
 	}
 	

@@ -1,102 +1,97 @@
 package com.personnelmgmt2.models;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class Identity {
-	String id;
-	//	Values we can normally fill in from the SailPoint Create Identity form
-	String userName;
-	Name name; //	name : {formatted, familyName, givenName}
-	String displayName;
-	String userType;
-//	boolean active;	//	If the user is an administrator or not. May not need this.
+	@Value("${spring.datasource.url}/Users") private static String baseUrl;
+	
+	String userName;	//	Required for POST and PUT, but cannot be changed by PUT.
 	String password;
-	//	emails: [{type, value, primary}, ...]
-	Email[] emails;
-	//	Is "urn:ietf:params:scim:schemas:sailpoint:1.0:User" in the SCIM request body
-	User urn_ietf_params_scim_schemas_sailpoint_1_0_User;
-	//	Is "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User"
-	User2 urn_ietf_params_scim_schemas_extension_enterprise_2_0_User;
+	String firstName;
+	String lastName;
+	String email;
+	String manager;
+	String managerId;
+	String softwareVersion;
+	String administrator;
+	String administratorId;
+	String displayName;
+	boolean active;		//	If the user is an administrator or not. May not need this.
+	String userType;	//	Required for POST and PUT.
+	String department;
 	
-	public Identity() {}
-	
-	//	Constructor used by frontend requests.
-	public Identity(String identityName, String password, String firstName, String lastName,
-					String email, String manager, String softwareVersion, String administrator,
-					String displayName, /*boolean isActive,*/ String type, String department) {
-		this.name = new Name(identityName, firstName, lastName);
+	public Identity(String userName, String password, String firstName, String lastName, String email,
+			String manager, String managerId, String softwareVersion, String administrator, String administratorId,
+			String displayName, boolean active, String userType, String department) {
+		super();
+		this.userName = userName;
 		this.password = password;
-		this.emails = new Email[1];
-		emails[0] = new Email("default", email, true);
-		
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.manager = manager;	//	May not matter, as long as you have the ID.
+		this.managerId = managerId;
+		this.softwareVersion = softwareVersion;
+		this.administrator = administrator;
+		this.administratorId = administratorId;
+		this.displayName = displayName;
+		this.active = active;
+		this.userType = userType;
+		this.department = department; 
 	}
 	
-	//	Name object transfer class.
-	class Name {
-		String formatted;
-		String familyName;	//	last name.
-		String givenName;	//	first name.
-		
-		public Name(String formatted, String familyName, String givenName) {
-			this.formatted = formatted;
-			this.familyName = familyName;
-			this.givenName = givenName;
-		}
-	}
-	
-	//	Email object transfer class.
-	class Email {
-		String type;
-		String value;
-		boolean primary;
-		
-		public Email(String type, String value, boolean primary) {
-			this.type = type;
-			this.value = value;
-			this.primary = primary;
-		}
-	}
-	
-	//	1.0 User object transfer class.
-	class User {
-//		UserAccount[] accounts;
-//		UserEntitlement[] entitlements;
-//		UserRole[] roles;
-//		String capabilities;
-//		int riskScore;
-//		boolean isManager;
-		UserAccount administrator;
-		String softwareVersion;
-//		String empId;
-//		String dn;
-//		String region;
-//		UserAccount regionOwner;
-//		String location;
-//		UserAccount locationOwner;
-		String Department;
-//		String[] costcenter;
-		String jobtitle;
-//		LocalDateTime lastRefresh;
-		
-		class UserEntitlement {
-			
-		}
-		
-		class UserRole {
-			
-		}
-	}
-	
-	class UserAccount {
-		String displayName;
-		String value;
-		String $ref;
-		
-		public UserAccount(String displayName) {
-			this.displayName = displayName;
-		}
-	}
-	
-	//	2.0 User transfer class.
-	class User2 {
-		UserAccount manager;
+	/**
+	 * This method converts this object into a format that SCIM likes.
+	 * @return A JSON string that matches this object's variables.
+	 */
+	public String toJsonString() {
+		String asJson = "{\r\n"
+				+ "  \"userName\": \"" + userName + "\",\r\n"
+				+ "  \"name\": {\r\n"
+				+ "    \"formatted\": \"" + firstName + " " + lastName + "\",\r\n"
+				+ "    \"familyName\": \"" + lastName + "\",\r\n"
+				+ "    \"givenName\": \"" + firstName + "\"\r\n"
+				+ "  },\r\n"
+				+ "  \"displayName\": \"" + displayName + "\",\r\n"
+				+ "  \"userType\": \"" + userType + "\",\r\n"
+				+ "  \"active\": " + active + ",\r\n"
+				+ "  \"password\": " + password + ",\r\n"
+				+ "  \"emails\": [\r\n"
+				+ "    {\r\n"
+				+ "      \"type\": \"default\",\r\n"
+				+ "      \"value\": \"" + email + "\",\r\n"
+				+ "      \"primary\": \"true\"\r\n"
+				+ "    }\r\n"
+				+ "  ],\r\n"
+				+ "  \"urn:ietf:params:scim:schemas:sailpoint:1.0:User\": {\r\n";
+
+		if(administrator != null && administratorId != null)
+			asJson = asJson
+				+ "    \"administrator\": {\r\n"
+				+ "      \"displayName\": \"" + administrator + "\",\r\n"
+				+ "      \"value\": \"" + administratorId + "\",\r\n"
+				+ "      \"$ref\": \"" + baseUrl + "/Users/" + administratorId + "\"\r\n" 
+				+ "    },\r\n";
+		asJson = asJson
+				+ "    \"softwareVersion\": \"" + softwareVersion + "\",\r\n"
+				+ "    \"Department\": \"" + department + "\"\r\n"
+				+ "  },\r\n";
+		if(manager != null && managerId != null)
+			asJson = asJson
+				+ "  \"urn:ietf:params:scim:schemas:extension:enterprise:2.0:User\": {\r\n"
+				+ "    \"manager\": {\r\n"
+				+ "      \"displayName\": \"" + manager + "\",\r\n"
+				+ "      \"value\": \"" + managerId + "\",\r\n"
+				+ "      \"$ref\": \"" + baseUrl + "/" + managerId + "\"\r\n" 
+				+ "    }\r\n"
+				+ "  },\r\n";
+		asJson = asJson
+				+ "  \"schemas\": [\r\n"
+				+ "    \"urn:ietf:params:scim:schemas:sailpoint:1.0:User\",\r\n"
+				+ "    \"urn:ietf:params:scim:schemas:core:2.0:User\",\r\n"
+				+ "    \"urn:ietf:params:scim:schemas:extension:enterprise:2.0:User\"\r\n"
+				+ "  ]\r\n"
+				+ "}";
+		return asJson;
 	}
 }
