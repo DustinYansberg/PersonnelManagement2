@@ -7,7 +7,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ErrorPipe implements PipeTransform {
 
   transform(value: any, input: string, length: number): string {
-    console.log(value)
     let errorMessage = '';
     //check if any input
     if (value!== null){

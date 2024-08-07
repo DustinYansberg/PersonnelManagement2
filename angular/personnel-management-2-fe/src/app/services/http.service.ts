@@ -24,12 +24,25 @@ export class HttpService {
 
   //create user
   createUser(user: User){
-    console.log("create user request", user)
+    console.log("create user request", user);
+    return this.http.post(this.url+'identity', {
+      "userName": user.username,
+      "password": user.password,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "email": user.email,
+      "administratorId": user.administratorId,
+      "displayName": user.displayName,
+      "active": user.active,
+      "userType": user.type,
+      "department": user.department
+  }, {observe: 'response'});
   }
 
   //Edit user
   updateUser(user: User){
     console.log("update user request", user)
+    //return this.http.post(this.url+'identity/'+ user.userId, user, {observe: 'response'});
   }
 
   //delete user by ID

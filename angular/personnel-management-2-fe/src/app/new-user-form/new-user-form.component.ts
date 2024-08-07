@@ -30,13 +30,13 @@ export class NewUserFormComponent {
       username: ['', Validators.required],
       displayName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      managerId: ['', Validators.required],
-      manager: ['', Validators.required],
+      managerId: [''],
+      manager: [''],
       type: ['', Validators.required],
-      userId: ['', Validators.required],
+      userId: [''],
       password: ['', Validators.required],
-      softwareVersion: ['', Validators.required],
-      administrator: ['', Validators.required],
+      softwareVersion: [''],
+      administrator: [''],
       administratorId: ['', Validators.required],
       active: [true, Validators.required],
       department: ['', Validators.required],
@@ -95,7 +95,17 @@ export class NewUserFormComponent {
   }
 
   createUser(){
-    this.httpService.createUser(this.newUserForm.value);
+    this.httpService.createUser(this.newUserForm.value).subscribe(
+      {
+        next: resp => {
+          console.log(resp.body)
+        },
+        error: err => {
+          console.log(err)
+          console.log(this.newUserForm.value)
+        }
+      }
+    );
   }
 
 }

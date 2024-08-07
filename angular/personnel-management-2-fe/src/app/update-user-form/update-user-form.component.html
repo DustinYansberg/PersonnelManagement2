@@ -1,6 +1,7 @@
 <h2>Edit {{ user.displayName }}</h2>
 
 <form [formGroup]="updateUserForm">
+
   <div class="formLine">
     
     <label for="firstName">User First Name: </label>
@@ -64,10 +65,8 @@
     <label for="department">Department: </label>
     <input type="string" id="department" name="department" formControlName="department" />
   </div>
-
-
-  <p-button label="Submit" severity="primary" class="button" (click)="updateUser()" [disabled]="updateUserForm.invalid"/>
-
+  <p-button label="Submit" severity="primary" class="button" (click)="updateUser()" />
+  <!-- [disabled]="updateUserForm.invalid" -->
   <section id="errorMessages"> 
     @if(firstName?.touched || firstName?.dirty){
       <div>
@@ -110,5 +109,5 @@
       </div>
     } -->
     </section>
+  
 </form>
-
