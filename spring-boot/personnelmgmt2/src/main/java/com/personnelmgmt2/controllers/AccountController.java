@@ -62,6 +62,14 @@ public class AccountController {
 		} catch(Exception e) {return processError(e, "getAccountById()");}
 	}
 	
+	@GetMapping("/byIdentityId/{id}")
+	public ResponseEntity<Object> getAccountsByIdentityId(@PathVariable String identityId) {
+		try {
+			String filterById = "filter=identity.value eq \"" + identityId + "\"";
+			return sendRestTemplateExchange(filterById, baseUrl + "/" + identityId, HttpMethod.GET);
+		} catch(Exception e) {return processError(e, "getAccountsByIdentityId");}
+	}
+	
 	//	FIXME Error message "Please provide all required fields." while all fields provided
 	@PostMapping
 	public ResponseEntity<Object> createAccount(@RequestBody Account account) {

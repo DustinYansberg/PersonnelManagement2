@@ -10,10 +10,8 @@ public class Identity {
 	String firstName;
 	String lastName;
 	String email;
-//	String manager;
 	String managerId;
 	String softwareVersion;
-//	String administrator;
 	String administratorId;
 	String displayName;
 	boolean active;		//	If the user is an administrator or not. May not need this.
@@ -29,10 +27,8 @@ public class Identity {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-//		this.manager = manager;	//	May not matter, as long as you have the ID.
 		this.managerId = managerId;
 		this.softwareVersion = softwareVersion;
-//		this.administrator = administrator;
 		this.administratorId = administratorId;
 		this.displayName = displayName;
 		this.active = active;
