@@ -12,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ErrorPipe } from '../pipes/error.pipe';
 import { Button } from 'primeng/button';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-update-user-form',
@@ -30,9 +31,9 @@ export class UpdateUserFormComponent {
     private formBuilder: FormBuilder
   ) {
     this.getUserById();
-    console.log(this.user);
+    
     this.updateUserForm = this.formBuilder.group({
-      firstName: ['',Validators.compose([Validators.required, Validators.minLength(4)]),],
+      firstName: [this.user.firstName,Validators.compose([Validators.required, Validators.minLength(4)]),],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
       username: ['', Validators.required],
       displayName: ['', Validators.required],
@@ -48,10 +49,10 @@ export class UpdateUserFormComponent {
       active: [true, Validators.required],
       department: ['', Validators.required],
     });
-    
   }
 
   ngOnInit() {
+    this.getUserById();
     this.updateUserForm.valueChanges.subscribe((formValues) => {
       this.user = { ...this.user, ...formValues };
     });
@@ -101,11 +102,16 @@ export class UpdateUserFormComponent {
   get department(){
     return this.updateUserForm.get('department');
   }
-
+  //Aysnc??
   getUserById() {
     this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
       let item =resp.body;
-      this.user =new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, item.managerId, 'manager', item.meta.resourceType, 'software version', 'administrator', 'adminId', true, 'department');
+      const dynamicKey = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
+      const adminValue = item[dynamicKey];
+      const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
+      const managerValue = item[dynamicKey2];
+      this.user =new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department');
+      this.updateUserForm.patchValue(this.user);
     });
   }
 

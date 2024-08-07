@@ -32,7 +32,7 @@ searchStr: string = '';
           const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
           const managerValue = item[dynamicKey2];
         this.users.push(
-          new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department')
+          new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.userType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department')
         );
      }
       }
@@ -41,9 +41,10 @@ searchStr: string = '';
 
   deleteUser(userId: string){
     this.httpService.deleteUser(userId)
-    //.subscribe(response =>
-    this.getAllUsers();
-  //)
+    .subscribe(response =>{
+      this.getAllUsers();
+    });
+    
   }
 
   processDeleteEvent(userId: string){
