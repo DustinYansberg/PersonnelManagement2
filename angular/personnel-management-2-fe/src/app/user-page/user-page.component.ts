@@ -28,6 +28,7 @@ export class UserPageComponent {
       const adminValue = item[dynamicKey];
       const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
       const managerValue = item[dynamicKey2];
+      console.log(item);
       this.user =new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department');
       const dynamicKey3 = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
       const accountValue = item[dynamicKey3];
@@ -37,11 +38,21 @@ export class UserPageComponent {
 
   getUserAccountIds(accounts:any){
       for (let account of accounts){
+        console.log("account "+account.value)
         const dynamicKey4 = "urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:Salesforce:account" as keyof typeof account;
         const accountSFValue = account[dynamicKey4];
-        this.httpService.getAccountById(account.value).subscribe(resp => {
-          this.userAccounts.push(new Account(account.application.value, account.identity.value, account.nativeIdentity, account.displayName, 'instanceid', 'password','currentpassword', accountSFValue.IsActive, account.locked, account.manuallyCorrelated, account.hasEntitlements, 'accountappname', 'appspecificproperies'));
-        });
+        this.httpService.getAccountById(account.value).subscribe(
+          {
+            next: resp => {
+              let item = resp.body;
+              console.log(item)
+          this.userAccounts.push(new Account(item.application.value, item.identity.value, item.nativeIdentity, item.application.displayName, 'instanceid', 'password','currentpassword', item.active, item.locked, item.manuallyCorrelated, item.hasEntitlements, 'accountappname', 'appspecificproperies'));
+            },
+            error: err => {
+              console.log(err);
+            }
+          });
       }
+      console.log(this.userAccounts);
   }
 }

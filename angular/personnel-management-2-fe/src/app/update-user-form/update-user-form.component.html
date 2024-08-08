@@ -14,7 +14,10 @@
   </div>
   <div class="formLine">
     <label for="username">Username: </label>
-    <input type="text" id="username" name="Username" formControlName="username" />
+    <!-- <input type="text" id="username" name="Username" formControlName="username"/> -->
+     <p>
+      {{ user.username}}
+     </p>
   </div>
   <div class="formLine">
     <label for="displayName">User Display Name: </label>
@@ -33,21 +36,17 @@
     <input type="string" id="manager" name="manager" formControlName="manager" />
   </div>
   <div class="formLine">
-    <label for="type">User Type: </label>
-    <input type="text" id="type" name="type" formControlName="type" />
-  </div>
-  <div class="formLine">
     <label for="userId">User ID: </label>
     <input type="string" id="userId" name="userId" formControlName="userId" />
   </div>
   <div class="formLine">
     <label for="password">Password: </label>
-    <input type="password" id="password" name="password" formControlName="password" />
+    <input type="password" id="password" name="password" formControlName="password"  />
   </div>
-  <div class="formLine">
+  <!-- <div class="formLine">
     <label for="softwareVersion">Software Version: </label>
     <input type="string" id="softwareVersion" name="softwareVersion" formControlName="softwareVersion" />
-  </div>
+  </div> -->
   <div class="formLine">
     <label for="administrator">Administrator: </label>
     <input type="string" id="administrator" name="administrator" formControlName="administrator" />
@@ -58,8 +57,8 @@
   </div>
   <div class="formLine">
     <label for="active">Active: </label>
-    <input type="p-button" id="active" name="active" formControlName="active" />
-    <!-- <p-radioButton formControlName="active" variant="filled" /> -->
+    <input type="string" id="active" name="active" formControlName="active" />
+    <!-- <p-checkbox formControlName="active"  inputId="active" value="true" /> -->
   </div>
   <div class="formLine">
     <label for="department">Department: </label>
@@ -93,21 +92,17 @@
           {{ email?.errors | error : 'Email' : 4}}
       </div>
     }
-    <!-- @if(managerId?.touched || managerId?.dirty){
+    @if(managerId?.touched || managerId?.dirty){
       <div>
           {{ firstName?.errors | error : 'User First Name' : 4}}
       </div>
-    } -->
-    @if(type?.touched || type?.dirty){
-      <div>
-          {{ type?.errors | error : 'User Type' : 4}}
-      </div>
-    }
-    <!-- @if(userId?.touched || userId?.dirty){
+    } 
+
+    @if(userId?.touched || userId?.dirty){
       <div>
           {{ userId?.errors }}
       </div>
-    } -->
+    }
     </section>
   
 </form>

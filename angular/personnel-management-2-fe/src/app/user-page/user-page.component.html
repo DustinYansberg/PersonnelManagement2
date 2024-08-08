@@ -12,23 +12,27 @@
         Display Name: {{ user.displayName }}
     </p>
     <p>
-        {{ user.type }}
-        {{ user.manager }}
-        {{ user.managerId }}
-        {{ user.softwareVersion }}
-        {{ user.administrator }}
-        {{ user.administratorId }}
-        {{ user.active }}
-        {{ user.department }}
-
+        Administrator: {{ user.administrator }}
     </p>
+        {{ user.managerId }}
+    
+    @if(user.active){
+        <p>User is active</p>
+    } @else{
+        <p>User is inactive</p>
+    }
+    <p>
+        Department: {{ user.department }}
+    </p>
+       
+
+    
     @for(account of userAccounts; track $index){
     <p>
         Account:
         {{ account.displayName }}
     </p>
-
-    }    
+}
     <ng-template pTemplate="footer">
         <div class="flex gap-3 mt-1">
             <p-button  label="Edit" severity="secondary" class="w-full" styleClass="w-full" [text]="true" />

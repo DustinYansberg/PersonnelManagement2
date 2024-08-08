@@ -11,16 +11,6 @@
     <p>
         Display Name: {{ user.displayName }}
     </p>
-    <p>
-        {{ user.type }}
-        {{ user.manager }}
-        {{ user.managerId }}
-        {{ user.softwareVersion }}
-        {{ user.administrator }}
-        {{ user.administratorId }}
-        {{ user.active }}
-        {{ user.department }}
-    </p>
     <ng-template pTemplate="footer">
         <div class="flex gap-3 mt-1">
             <p-button (click)="editUser()" label="Edit" severity="secondary" class="w-full" styleClass="w-full" [text]="true" />

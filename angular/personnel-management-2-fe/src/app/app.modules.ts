@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { InputText } from 'primeng/inputtext';
 import { PrimeIcons } from 'primeng/api';
 import { RadioButton } from 'primeng/radiobutton';
+import { Checkbox } from 'primeng/checkbox';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RadioButton } from 'primeng/radiobutton';
     BrowserAnimationsModule,
     InputText,
     PrimeIcons,
-    RadioButton
+    RadioButton,
+    Checkbox
   ],
   providers: [],
   bootstrap: [AppComponent]

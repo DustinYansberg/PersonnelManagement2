@@ -30,13 +30,11 @@ export class NewUserFormComponent {
       username: ['', Validators.required],
       displayName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      managerId: [''],
       manager: [''],
       type: ['', Validators.required],
       userId: [''],
       password: ['', Validators.required],
       softwareVersion: [''],
-      administrator: [''],
       administratorId: ['', Validators.required],
       active: [true, Validators.required],
       department: ['', Validators.required],
@@ -60,9 +58,6 @@ export class NewUserFormComponent {
   get managerId(){
     return this.newUserForm.get('managerId');
   }
-  get manager(){
-    return this.newUserForm.get('manager');
-  }
   get type(){
     return this.newUserForm.get('type');
   }
@@ -74,9 +69,6 @@ export class NewUserFormComponent {
   }
   get softwareVersion(){
     return this.newUserForm.get('softwareVersion');
-  }
-  get aministrator(){
-    return this.newUserForm.get('administrator');
   }
   get aministratorId(){
     return this.newUserForm.get('administratorId');

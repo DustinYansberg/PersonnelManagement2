@@ -27,30 +27,22 @@
     <label for="managerId">Manager ID: </label>
     <input type="string" id="mangerId" name="managerId" formControlName="managerId" />
   </div>
-  <div class="formLine">
-    <label for="manager">Manager: </label>
-    <input type="string" id="manager" name="manager" formControlName="manager" />
-  </div>
-  <div class="formLine">
+  <!-- <div class="formLine">
     <label for="type">User Type: </label>
     <input type="text" id="type" name="type" formControlName="type" />
-  </div>
-  <div class="formLine">
+  </div> -->
+  <!-- <div class="formLine">
     <label for="userId">User ID: </label>
     <input type="string" id="userId" name="userId" formControlName="userId" />
-  </div>
+  </div> -->
   <div class="formLine">
     <label for="password">Password: </label>
     <input type="string" id="password" name="password" formControlName="password" />
   </div>
-  <div class="formLine">
+  <!-- <div class="formLine">
     <label for="softwareVersion">Software Version: </label>
     <input type="string" id="softwareVersion" name="softwareVersion" formControlName="softwareVersion" />
-  </div>
-  <div class="formLine">
-    <label for="administrator">Administrator: </label>
-    <input type="string" id="administrator" name="administrator" formControlName="administrator" />
-  </div>
+  </div> -->
   <div class="formLine">
     <label for="administratorId">Administrator ID: </label>
     <input type="string" id="administratorId" name="administratorId" formControlName="administratorId" />
@@ -93,20 +85,20 @@
         {{ email?.errors | error : 'Email' : 4}}
       </div>
       }
-      <!-- @if(managerId?.touched || managerId?.dirty){
+      @if(managerId?.touched || managerId?.dirty){
     <div>
         {{ firstName?.errors | error : 'User First Name' : 4}}
     </div>
-  } -->
+  }
       @if(type?.touched || type?.dirty){
       <div>
         {{ type?.errors | error : 'User Type' : 4}}
       </div>
       }
-      <!-- @if(userId?.touched || userId?.dirty){
+      @if(userId?.touched || userId?.dirty){
     <div>
         {{ userId?.errors }}
     </div>
-  } -->
+  }
     </section>
 </form>

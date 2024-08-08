@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { ErrorPipe } from '../pipes/error.pipe';
 import { Button } from 'primeng/button';
 import { timeout } from 'rxjs';
+import { Checkbox } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-update-user-form',
@@ -33,15 +34,14 @@ export class UpdateUserFormComponent {
     this.getUserById();
     
     this.updateUserForm = this.formBuilder.group({
-      firstName: [this.user.firstName,Validators.compose([Validators.required, Validators.minLength(4)]),],
+      firstName: ['',Validators.compose([Validators.required, Validators.minLength(4)]),],
       lastName: ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      username: ['', Validators.required],
+      username: [{value:''}, Validators.required],
       displayName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
       managerId: ['', Validators.required],
       manager: ['', Validators.required],
-      type: ['', Validators.required],
-      userId: ['', Validators.required],
+      userId: [{value: ''}, Validators.required],
       password: ['', Validators.required],
       softwareVersion: ['', Validators.required],
       administrator: ['', Validators.required],
@@ -78,9 +78,7 @@ export class UpdateUserFormComponent {
   get manager(){
     return this.updateUserForm.get('manager');
   }
-  get type(){
-    return this.updateUserForm.get('type');
-  }
+ 
   get userId(){
     return this.updateUserForm.get('userId');
   }
@@ -102,6 +100,7 @@ export class UpdateUserFormComponent {
   get department(){
     return this.updateUserForm.get('department');
   }
+
   
   getUserById() {
     this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
@@ -116,7 +115,8 @@ export class UpdateUserFormComponent {
   }
 
   updateUser() {
-    // console.log(this.user);
+    console.log(this.updateUserForm.value)
+    
     this.httpService.updateUser(this.updateUserForm.value).subscribe(resp =>{
       console.log(resp.body);
     }

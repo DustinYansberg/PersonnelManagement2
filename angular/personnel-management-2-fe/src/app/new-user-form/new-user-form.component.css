@@ -1,3 +1,13 @@
 form, h2 {
     text-align: center;
 }
+.formLine{
+    padding: .1em;
+}
+
+input {
+    width: 150px;
+    margin-left: .5em;
+    padding-left: .35em;
+    border-radius: 8px;
+}
