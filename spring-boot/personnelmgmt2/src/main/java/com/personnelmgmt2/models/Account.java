@@ -5,41 +5,48 @@ import org.springframework.beans.factory.annotation.Value;
 public class Account {
 	@Value("${spring.datasource.url}") private static String baseUrl;
 
-	String accountAppId;	//	Required.
-	String accountUserId;	//	Required.
-	String nativeIdentity;	//	Required in the body, even if it's blank
-	String displayName;
-	String instanceId;		//	Cannot change once set.
-	String password;		//	Required?
-	String currentPassword;	//	Required?
-	boolean active;			//	Must be set true in POST.
+	//	All variables below are required unless stated otherwise.
+	String accountAppId;
+//	String accountUserDisplayName;	//	Not required. Is NOT the property 'displayName' of resource 'User'.
+	String accountUserId;
+	String nativeIdentity;			//	Required in POST, must leave out of PUT.
+	String accountDisplayName;
+	String instanceId;				//	Not required, but cannot change once set.
+	String password;				//	Required?
+	String currentPassword;			//	Required?
+	boolean active;					//	Must be set true in POST.
 	boolean locked;
 	boolean manuallyCorrelated;
 	boolean hasEntitlements;
 	
 	//	Because some accounts are for Salesforce and some are for Azure Entra ID.
-	String accountAppName;	//	Required. Must either be "Salesforce" or "Azure Entra ID"
+	String accountAppName;			//	Required. Must either be "Salesforce" or "Azure Entra ID"
+	
 	//	All of these are required for Salesforce apps.
-	String salesforceUsername;	//	MUST BE IN EMAIL FORM
+	String salesforceUsername;		//	MUST BE IN EMAIL FORM
 	String salesforceLastName;
 	String salesforceFirstName;
 	String salesforceCommunityNickname;
-	String salesforceAlias;	//	Alphanumeric, must be 8 characters long and unique.
+	String salesforceAlias;			//	Alphanumeric, must be 8 characters long and unique.
 	String salesforceEmail;
+	//	Constant values to not change.
 	static final String timeZoneSidKey = "America/Los_Angeles";
 	static final String localeSidKey = "en_US";
 	static final String emailEncodingKey = "UTF-8";
 	static final String languageLocaleKey = "en_US";
-	
 
-	public Account(String accountAppId, String accountUserId, String nativeIdentity, String displayName,
-			String instanceId, String password, String currentPassword, boolean active, boolean locked,
-			boolean manuallyCorrelated, boolean hasEntitlements, String accountAppName, String appSpecificProperties) {
+	//	FIXME A value is required for property 'displayName' of resource 'User'.
+	public Account(String accountAppId, String accountUserDisplayName, String accountUserId, String nativeIdentity,
+			String accountDisplayName, String instanceId, String password, String currentPassword, boolean active,
+			boolean locked, boolean manuallyCorrelated, boolean hasEntitlements, String accountAppName,
+			String salesforceUsername, String salesforceLastName, String salesforceFirstName,
+			String salesforceCommunityNickname, String salesforceAlias, String salesforceEmail) {
 		super();
 		this.accountAppId = accountAppId;
+//		this.accountUserDisplayName = accountUserDisplayName;
 		this.accountUserId = accountUserId;
 		this.nativeIdentity = nativeIdentity;
-		this.displayName = displayName;
+		this.accountDisplayName = accountDisplayName;
 		this.instanceId = instanceId;
 		this.password = password;
 		this.currentPassword = currentPassword;
@@ -48,22 +55,32 @@ public class Account {
 		this.manuallyCorrelated = manuallyCorrelated;
 		this.hasEntitlements = hasEntitlements;
 		this.accountAppName = accountAppName;
+		this.salesforceUsername = salesforceUsername;
+		this.salesforceLastName = salesforceLastName;
+		this.salesforceFirstName = salesforceFirstName;
+		this.salesforceCommunityNickname = salesforceCommunityNickname;
+		this.salesforceAlias = salesforceAlias;
+		this.salesforceEmail = salesforceEmail;
 	}
 
 	public String toJsonString() {
 		String asJson = "{\r\n"
 			+ "  \"identity\": {\r\n"
+//			+ "    \"displayName\": \"" + accountUserDisplayName + "\",\r\n"
 			+ "    \"value\": \"" + accountUserId + "\"\r\n"
 			+ "  },\r\n"
 			+ "  \"application\": {\r\n"
 			+ "    \"value\": \"" + accountAppId + "\"\r\n"
-			+ "  },\r\n"
-			+ "  \"nativeIdentity\": \"" + nativeIdentity + "\",\r\n"
-			+ "  \"displayName\": \"" + displayName + "\",\r\n"
-			+ "  \"instance\": \"" + instanceId + "\",\r\n"
-			+ "  \"password\": \"" + password + "\",\r\n"
-			+ "  \"currentPassword\": \"" + currentPassword + "\",\r\n"
-			+ "  \"urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:" + accountAppName + ":account\": {";
+			+ "  },\r\n";
+		if(nativeIdentity != null) {
+			asJson = asJson + "  \"nativeIdentity\": \"" + nativeIdentity + "\",\r\n";
+		}
+		asJson = asJson
+			+ "  \"displayName\": \"" + accountDisplayName + "\",\r\n"
+//			+ "  \"instance\": \"" + instanceId + "\",\r\n"
+//			+ "  \"password\": \"" + password + "\",\r\n"
+//			+ "  \"currentPassword\": \"" + currentPassword + "\",\r\n"
+			+ "  \"urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:" + accountAppName + ":account\": {\r\n";
 		if(accountAppName.equals("Salesforce")) {
 			asJson = asJson
 				+ "    \"ProfileName\": \"Standard User\",\r\n"
@@ -76,12 +93,19 @@ public class Account {
 				+ "    \"TimeZoneSidKey\": \"" + timeZoneSidKey + "\",\r\n"
 				+ "    \"LocaleSidKey\": \"" + localeSidKey + "\",\r\n"
 				+ "    \"EmailEncodingKey\": \"" + emailEncodingKey + "\",\r\n"
-				+ "    \"LanguageLocaleKey\": \"" + languageLocaleKey + "\",\r\n";
+				+ "    \"LanguageLocaleKey\": \"" + languageLocaleKey + "\"\r\n";
+//				+ "    \"User\": {\"displayName\": \"TESTDISPLAYNAME\"}\r\n";
 		}
 		asJson = asJson + "  },\r\n"
 			+ "  \"active\": " + active + ",\r\n"
 			+ "  \"locked\": " + locked + "\r\n"
 			+ "}";
 		return asJson;
+		
+		
+	}
+
+	public String getAccountUserId() {
+		return accountUserId;
 	}
 }

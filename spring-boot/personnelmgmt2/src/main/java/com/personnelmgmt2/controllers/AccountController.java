@@ -42,9 +42,15 @@ public class AccountController {
 	}
 	
 	private ResponseEntity<Object> processError(Exception e, String fromMethod) {
-		//	TODO There is probably a way to formally extract error code from exception message
-		return ResponseEntity.status(500).header("Error", "SCIM Error " + e)
-				.body("An error occurred when sending the request to SCIM:\n" + e);
+		//	Workaround for Salesforce not sending success upon creating new account
+		if(!e.toString().contains("detail")) {
+			return ResponseEntity.status(201).header("Success", "Account successfully created")
+					.body(null);
+		}
+		else {
+			return ResponseEntity.status(500).header("Error", "SCIM Error " + e)
+					.body("An error occurred when sending the request to SCIM:\n" + e);
+		}
 	}
 	
 	
@@ -70,7 +76,6 @@ public class AccountController {
 		} catch(Exception e) {return processError(e, "getAccountsByIdentityId");}
 	}
 	
-	//	FIXME Error message "Please provide all required fields." while all fields provided
 	@PostMapping
 	public ResponseEntity<Object> createAccount(@RequestBody Account account) {
 		System.out.println(account.toJsonString());
@@ -83,6 +88,7 @@ public class AccountController {
 	@PutMapping("/{id}")
 	public ResponseEntity<Object> updateAccountById(@PathVariable String id,
 													@RequestBody Account newFields) {
+		System.out.println(newFields.toJsonString());
 		try {
 			return sendRestTemplateExchange(newFields.toJsonString(), baseUrl + "/" + id, HttpMethod.PUT);
 		} catch(Exception e) {return processError(e, "updateAccountById");}

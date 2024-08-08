@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class Identity {
 	@Value("${spring.datasource.url}/Users") private static String baseUrl;
 	
-	String userName;	//	Required for POST and PUT, but cannot be changed by PUT.
+	String userName;		//	Required for POST and PUT, but cannot be changed by PUT.
 	String password;
 	String firstName;
 	String lastName;
@@ -14,8 +14,8 @@ public class Identity {
 	String softwareVersion;
 	String administratorId;
 	String displayName;
-	boolean active;		//	If the user is an administrator or not. May not need this.
-	String userType;	//	Required for POST and PUT.
+	boolean active;			//	If the user is an administrator or not. May not need this.
+	String userType;		//	Required for POST and PUT.
 	String department;
 	
 	public Identity(String userName, String password, String firstName, String lastName, String email,
