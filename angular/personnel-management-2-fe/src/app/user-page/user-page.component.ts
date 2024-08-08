@@ -28,7 +28,7 @@ export class UserPageComponent {
       const adminValue = item[dynamicKey];
       const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
       const managerValue = item[dynamicKey2];
-      console.log(item);
+      console.log(item)
       this.user =new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department');
       const dynamicKey3 = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
       const accountValue = item[dynamicKey3];
@@ -46,7 +46,7 @@ export class UserPageComponent {
             next: resp => {
               let item = resp.body;
               console.log(item)
-          this.userAccounts.push(new Account(item.application.value, item.identity.value, item.nativeIdentity, item.application.displayName, 'instanceid', 'password','currentpassword', item.active, item.locked, item.manuallyCorrelated, item.hasEntitlements, 'accountappname', 'appspecificproperies'));
+          this.userAccounts.push(new Account(item.application.value, item.identity.value, item.nativeIdentity, item.application.displayName, 'instanceid', 'password','currentpassword', item.active, item.locked, item.manuallyCorrelated, item.hasEntitlements,'accountappname', 'salesforceusername', 'salesforcefirstname', 'salesforcelastname', 'salesforcenickname', 'salesforcealias', 'salesforceemail'));
             },
             error: err => {
               console.log(err);

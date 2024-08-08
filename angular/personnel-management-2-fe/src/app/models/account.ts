@@ -12,7 +12,12 @@ export class Account {
 	manuallyCorrelated: boolean;
 	hasEntitlements: boolean;
     accountAppName: string;
-	appSpecificProperties: string;
+    salesforceUsername: string;
+	salesforceFirstName: string;
+    salesforceLastName:string;
+	salesforceCommunityNickname:string;
+	salesforceAlias:string;
+	salesforceEmail: string;
 
     constructor(accountAppId: string,
         accountUserId: string,
@@ -26,7 +31,12 @@ export class Account {
         manuallyCorrelated: boolean,
         hasEntitlements: boolean,
         accountAppName: string,
-        appSpecificProperties: string){
+        salesforceUsername: string,
+        salesforceFirstName: string,
+        salesforceLastName:string,
+        salesforceCommunityNickname:string,
+        salesforceAlias:string,
+        salesforceEmail: string){
             this.accountAppId = accountAppId;
             this.accountUserId = accountUserId;
 	        this.nativeIdentity = nativeIdentity;
@@ -39,6 +49,11 @@ export class Account {
             this.manuallyCorrelated = manuallyCorrelated;
             this.hasEntitlements = hasEntitlements;
             this.accountAppName = accountAppName;
-            this.appSpecificProperties = appSpecificProperties;
+            this.salesforceUsername = salesforceUsername;
+            this.salesforceFirstName = salesforceFirstName;
+            this.salesforceLastName = salesforceLastName;
+            this.salesforceCommunityNickname = salesforceCommunityNickname
+            this.salesforceAlias = salesforceAlias;
+            this.salesforceEmail = salesforceEmail;
         }
 }

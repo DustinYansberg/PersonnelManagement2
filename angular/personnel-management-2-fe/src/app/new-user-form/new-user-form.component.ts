@@ -36,8 +36,7 @@ export class NewUserFormComponent {
       password: ['', Validators.required],
       softwareVersion: [''],
       administratorId: ['', Validators.required],
-      active: [true, Validators.required],
-      department: ['', Validators.required],
+      active: [true, Validators.required]
     });
   }
   get firstName(){
@@ -75,9 +74,6 @@ export class NewUserFormComponent {
   }
   get active(){
     return this.newUserForm.get('active');
-  }
-  get department(){
-    return this.newUserForm.get('department');
   }
 
   ngOnInit() {
