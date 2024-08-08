@@ -102,7 +102,7 @@ export class UpdateUserFormComponent {
   get department(){
     return this.updateUserForm.get('department');
   }
-  //Aysnc??
+  
   getUserById() {
     this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
       let item =resp.body;
@@ -117,6 +117,9 @@ export class UpdateUserFormComponent {
 
   updateUser() {
     // console.log(this.user);
-    this.httpService.updateUser(this.updateUserForm.value);
+    this.httpService.updateUser(this.updateUserForm.value).subscribe(resp =>{
+      console.log(resp.body);
+    }
+    );
   }
 }

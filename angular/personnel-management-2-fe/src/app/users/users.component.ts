@@ -5,6 +5,7 @@ import { User } from '../models/user';
 import { Button } from 'primeng/button';
 import { FormsModule } from '@angular/forms';
 import { FilterService, PrimeIcons } from 'primeng/api';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class UsersComponent {
 users: User[] = [];
 searchStr: string = '';
 
-  constructor(private httpService: HttpService, private filterService: FilterService){
+  constructor(private httpService: HttpService, private filterService: FilterService, private router: Router){
     this.getAllUsers();
   }
   getAllUsers(){
@@ -26,7 +27,7 @@ searchStr: string = '';
     this.httpService.getAllUsers().subscribe(resp=>{
       this.users = [];
       for (let item of resp.body['Resources']){
-        if(item.name.givenName){
+        if(item.displayName){
           const dynamicKey = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
           const adminValue = item[dynamicKey];
           const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
@@ -87,5 +88,9 @@ searchStr: string = '';
   reset(){
     this.getAllUsers();
     this.searchStr ='';
+  }
+
+  clicked(id: string){
+    this.router.navigate(['user/'+id]);
   }
 }

@@ -11,10 +11,10 @@
 <p-button (click)="reset()" label="Reset" severity="primary" class="w-full" styleClass="w-full" [rounded]="true"/> -->
 <div class="cards">
 @for(user of users; track $index){
-    @if(user.firstName.toLocaleLowerCase().startsWith(searchStr.toLocaleLowerCase()) 
-    || user.lastName.toLocaleLowerCase().startsWith(searchStr.toLocaleLowerCase())){
+    @if(user.displayName.toLocaleLowerCase().includes(searchStr.toLocaleLowerCase()) && user.displayName.includes(' '))
+    {
 <app-user-card [user]="user"
-(deleteUserEvent)="processDeleteEvent($any($event))"></app-user-card>
+(deleteUserEvent)="processDeleteEvent($any($event))" (click)="clicked(user.userId)"></app-user-card>
     }
 }
 </div>

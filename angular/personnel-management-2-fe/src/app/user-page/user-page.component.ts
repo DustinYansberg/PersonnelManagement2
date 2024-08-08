@@ -1,0 +1,47 @@
+import { Component } from '@angular/core';
+import { HttpService } from '../services/http.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '../models/user';
+import { CardModule } from 'primeng/card';
+import { ButtonModule } from 'primeng/button';
+import { Account } from '../models/account';
+
+@Component({
+  selector: 'app-user-page',
+  standalone: true,
+  imports: [CardModule, ButtonModule],
+  templateUrl: './user-page.component.html',
+  styleUrl: './user-page.component.css'
+})
+export class UserPageComponent {
+
+  constructor(private httpService:HttpService, private route: ActivatedRoute){
+    this.getUserById()
+  }
+
+  user: User = new User('', '', '', '', '', '', '', '', '', '', '','','',true,'');
+  userAccounts: Account[]=[];
+  getUserById() {
+    this.httpService.getUserById(this.route.snapshot.params['id']).subscribe(resp => {
+      let item =resp.body;
+      const dynamicKey = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
+      const adminValue = item[dynamicKey];
+      const dynamicKey2 = "urn:ietf:params:scim:schemas:extension:enterprise:2.0:User" as keyof typeof item;
+      const managerValue = item[dynamicKey2];
+      this.user =new User(item.id, item.userName, 'password', item.name.givenName, item.name.familyName, item.displayName, item.emails[0].value, managerValue.manager.displayId, managerValue.manager.value, item.meta.resourceType, item.meta.version, adminValue.administrator.displayName, adminValue.administrator.value, true, 'department');
+      const dynamicKey3 = "urn:ietf:params:scim:schemas:sailpoint:1.0:User" as keyof typeof item;
+      const accountValue = item[dynamicKey3];
+      this.getUserAccountIds(accountValue.accounts);
+    });
+  }
+
+  getUserAccountIds(accounts:any){
+      for (let account of accounts){
+        const dynamicKey4 = "urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:Salesforce:account" as keyof typeof account;
+        const accountSFValue = account[dynamicKey4];
+        this.httpService.getAccountById(account.value).subscribe(resp => {
+          this.userAccounts.push(new Account(account.application.value, account.identity.value, account.nativeIdentity, account.displayName, 'instanceid', 'password','currentpassword', accountSFValue.IsActive, account.locked, account.manuallyCorrelated, account.hasEntitlements, 'accountappname', 'appspecificproperies'));
+        });
+      }
+  }
+}

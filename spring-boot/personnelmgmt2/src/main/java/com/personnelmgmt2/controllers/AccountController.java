@@ -62,7 +62,7 @@ public class AccountController {
 		} catch(Exception e) {return processError(e, "getAccountById()");}
 	}
 	
-	@GetMapping("/byIdentityId/{id}")
+	@GetMapping("/byIdentityId/{identityId}")
 	public ResponseEntity<Object> getAccountsByIdentityId(@PathVariable String identityId) {
 		try {
 			String filterById = "filter=identity.value eq \"" + identityId + "\"";

@@ -22,6 +22,10 @@ export class HttpService {
     return this.http.get(this.url+'identity/'+id, {observe: 'response'});
   }
 
+  //get account
+  getAccountById(id: string){
+      return this.http.get(this.url +'account/'+id, {observe: 'response'})
+  }
   //create user
   createUser(user: User){
     console.log("create user request", user);
@@ -42,7 +46,20 @@ export class HttpService {
   //Edit user
   updateUser(user: User){
     console.log("update user request", user)
-    //return this.http.post(this.url+'identity/'+ user.userId, user, {observe: 'response'});
+    return this.http.post(this.url+'identity/'+ user.userId, {
+      "userId": user.userId,
+      "userName": user.username,
+      "password": user.password,
+      "firstName": user.firstName,
+      "lastName": user.lastName,
+      "email": user.email,
+      "administratorId": user.administratorId,
+      "displayName": user.displayName,
+      "active": user.active,
+      "userType": user.type,
+      "department": user.department,
+      "managerId": user.managerId,
+  }, {observe: 'response'});
   }
 
   //delete user by ID
