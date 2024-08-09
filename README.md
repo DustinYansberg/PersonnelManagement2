@@ -53,26 +53,31 @@ Our team needed a way to give managers the ability to add, update, and delete em
 
 ## View all Users
 
+![viewAllUsers](https://github.com/user-attachments/assets/347ca249-e867-45b0-bb1d-835b60723e36)
+
 ## Sort All Users
+
+![sortAllUsers](https://github.com/user-attachments/assets/981cb9c0-a85c-4748-becc-dbaf636f7555)
 
 ## Search for a specific User
 
+![searchUser](https://github.com/user-attachments/assets/265ab9c7-2239-4b31-86f6-9f4c1b5e04b4)
+
 ## View, Edit, and Delete a user
 
-## Add and Account to a User
+![viewEditDeleteUser](https://github.com/user-attachments/assets/93d39a31-37d3-49f5-a273-8ef64dd13fe5)
+
+
+## Add an Account to a User
+
+![addAccountToUser](https://github.com/user-attachments/assets/a6fa89c7-d294-4a08-be5f-300e24685551)
+
 
 ## Delete an account from a user
 
 ## Create a new user
+![createUser](https://github.com/user-attachments/assets/8f586aa2-0db8-4c76-9475-8abb349435ef)
 
-
-
-
-# Other technical stuff
-
-The Server logic is written in Java with RESTful API calls for offices and employees. 
-
-The frontend is written in Angular JS with a Material UI component Library.
 
 # Contributing
 
