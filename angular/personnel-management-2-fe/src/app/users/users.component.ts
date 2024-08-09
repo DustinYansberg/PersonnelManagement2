@@ -63,6 +63,7 @@ export class UsersComponent {
 
   deleteUser(userId: string) {
     this.httpService.deleteUser(userId).subscribe((response) => {
+      this.router.navigate(['users'])
       this.getAllUsers();
     });
   }
@@ -94,14 +95,6 @@ export class UsersComponent {
     this.users = this.users.sort((a, b) =>
       b.firstName?.localeCompare(a.firstName)
     );
-  }
-
-  search() {
-    // let str = this.searchStr
-    // this.users =this.users.filter(user => {
-    //   return user.firstName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase())
-    //   || user.lastName.toLocaleLowerCase().startsWith(str.toLocaleLowerCase())
-    // });
   }
   reset() {
     this.getAllUsers();

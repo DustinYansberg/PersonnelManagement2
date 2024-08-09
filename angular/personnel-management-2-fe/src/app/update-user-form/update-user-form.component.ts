@@ -8,7 +8,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ErrorPipe } from '../pipes/error.pipe';
 import { Button } from 'primeng/button';
@@ -29,7 +29,8 @@ export class UpdateUserFormComponent {
   constructor(
     private httpService: HttpService,
     private route: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.getUserById();
     
@@ -117,7 +118,7 @@ export class UpdateUserFormComponent {
     console.log(this.updateUserForm.value)
     
     this.httpService.updateUser(this.updateUserForm.value).subscribe(resp =>{
-      console.log(resp.body);
+      this.router.navigate(['user/'+this.user.userId])
     }
     );
   }

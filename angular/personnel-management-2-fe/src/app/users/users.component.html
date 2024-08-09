@@ -1,11 +1,19 @@
-<h3>Users:</h3>
-<p>Order By:</p>
+<h2>Users:</h2>
+<h4 class="searchText">Order By:</h4>
+<span>
 <p-button (click)="sortLastAZ()" label="Last Name A-Z" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+</span>
+<span>
 <p-button (click)="sortLastZA()" label="Last Name Z-A" severity="primary" class="w-full" styleClass="w-full" [rounded]="true"/>
+</span>
+<span>
 <p-button (click)="sortFirstAZ()" label="First Name A-Z" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+</span>
+<span>
 <p-button (click)="sortFirstZA()" label="First Name Z-A" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
+</span>
 <hr>
-<label for="search">Search: </label>
+<label class="searchText" for="search">Search: </label>
 <input type="text" pInputText [(ngModel)]="searchStr" id="search" name="search" />
 <!-- <p-button (click)="search()" label="Search" severity="primary" class="w-full" styleClass="w-full" [rounded]="true" />
 <p-button (click)="reset()" label="Reset" severity="primary" class="w-full" styleClass="w-full" [rounded]="true"/> -->

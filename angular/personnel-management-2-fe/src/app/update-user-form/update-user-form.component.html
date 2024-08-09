@@ -15,9 +15,9 @@
   <div class="formLine">
     <label for="username">Username: </label>
     <!-- <input type="text" id="username" name="Username" formControlName="username"/> -->
-     <p>
+     <span>
       {{ user.username}}
-     </p>
+     </span>
   </div>
   <div class="formLine">
     <label for="displayName">User Display Name: </label>
@@ -27,17 +27,17 @@
     <label for="email">User email: </label>
     <input type="text" id="email" name="email" formControlName="email" />
   </div>
-  <div class="formLine">
+  <!-- <div class="formLine">
     <label for="managerId">Manager ID: </label>
     <input type="string" id="mangerId" name="managerId" formControlName="managerId" />
   </div>
   <div class="formLine">
     <label for="manager">Manager: </label>
     <input type="string" id="manager" name="manager" formControlName="manager" />
-  </div>
+  </div> -->
   <div class="formLine">
     <label for="userId">User ID: </label>
-    <input type="string" id="userId" name="userId" formControlName="userId" />
+    <span>{{ user.userId }}</span>
   </div>
   <div class="formLine">
     <label for="password">Password: </label>
@@ -47,17 +47,17 @@
     <label for="softwareVersion">Software Version: </label>
     <input type="string" id="softwareVersion" name="softwareVersion" formControlName="softwareVersion" />
   </div> -->
-  <div class="formLine">
+  <!-- <div class="formLine">
     <label for="administrator">Administrator: </label>
     <input type="string" id="administrator" name="administrator" formControlName="administrator" />
-  </div>
+  </div> -->
   <div class="formLine">
     <label for="administratorId">Administrator ID: </label>
     <input type="string" id="administratorId" name="administratorId" formControlName="administratorId" />
   </div>
   <div class="formLine">
     <label for="active">Active: </label>
-    <input type="string" id="active" name="active" formControlName="active" />
+    <input type="checkbox" id="active" name="active" formControlName="active" />
     <!-- <p-checkbox formControlName="active"  inputId="active" value="true" /> -->
   </div>
   <!-- <div class="formLine">
