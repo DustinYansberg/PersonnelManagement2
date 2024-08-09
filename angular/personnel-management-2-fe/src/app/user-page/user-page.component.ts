@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import {
   FormBuilder,
@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../models/user';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
@@ -21,48 +21,9 @@ import { Account } from '../models/account';
   styleUrl: './user-page.component.css',
 })
 export class UserPageComponent {
-  newAccountForm: FormGroup;
-  constructor(
-    private httpService: HttpService,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder
-  ) {
-    this.getUserById();
-    this.newAccountForm = this.formBuilder.group({
-      accountAppId: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(4)]),
-      ],
-      accountUserId: [
-        '',
-        Validators.compose([Validators.required, Validators.minLength(4)]),
-      ],
-      nativeIdentity: [''],
-      displayName: ['', Validators.required],
-      instanceId: [''],
-      password: [''],
-      currentPassword: ['', Validators.required],
-      active: [true],
-      locked: [false],
-      manuallyCorrelated: [false],
-      hasEntitlements: [true],
-      accountAppName: ['', Validators.required],
-      salesforceUsername: ['', Validators.required],
-      salesforceFirstName: ['', Validators.required],
-      salesforceLastName: ['', Validators.required],
-      salesforceCommunityNickname: ['', Validators.required],
-      salesforceAlias: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(8),
-          Validators.maxLength(8),
-        ]),
-      ],
-      salesforceEmail: ['', Validators.required],
-    });
-  }
+  userAccounts: Account[] = [];
   isAccountBlockOpen: boolean = false;
+  newAccountForm: FormGroup;
   account: Account = new Account(
     '0a03000490e613798190f06722171485',
     '',
@@ -100,7 +61,56 @@ export class UserPageComponent {
     true,
     ''
   );
-  userAccounts: Account[] = [];
+
+  constructor(
+    private httpService: HttpService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.getUserById();
+    this.newAccountForm = this.formBuilder.group({
+      accountAppId: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
+      accountUserId: [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(4)]),
+      ],
+      nativeIdentity: [''],
+      displayName: ['', Validators.required],
+      instanceId: [''],
+      password: [''],
+      currentPassword: ['', Validators.required],
+      active: [true],
+      locked: [false],
+      manuallyCorrelated: [false],
+      hasEntitlements: [true],
+      accountAppName: ['', Validators.required],
+      salesforceUsername: ['', Validators.required],
+      salesforceFirstName: ['', Validators.required],
+      salesforceLastName: ['', Validators.required],
+      salesforceCommunityNickname: ['', Validators.required],
+      salesforceAlias: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(8),
+        ]),
+      ],
+      salesforceEmail: ['', Validators.required],
+    });
+  }
+
+  ngOnInit() {
+    this.newAccountForm.valueChanges.subscribe((formValues) => {
+      this.account = { ...this.account, ...formValues };
+    });
+    this.newAccountForm.patchValue(this.account);
+  }
+
   getUserById() {
     this.httpService
       .getUserById(this.route.snapshot.params['id'])
@@ -136,11 +146,23 @@ export class UserPageComponent {
         this.getUserAccountIds(accountValue.accounts);
       });
   }
-  ngOnInit() {
-    this.newAccountForm.valueChanges.subscribe((formValues) => {
-      this.account = { ...this.account, ...formValues };
+
+  @Output() deleteUserEvent = new EventEmitter<string>();
+  deleteUser() {
+    // console.log(this.user.userId);
+    this.deleteUserEvent.emit(this.user.userId);
+    this.httpService.deleteUser(this.user.userId).subscribe({
+      next: (resp) => {
+        console.log(resp);
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
-    this.newAccountForm.patchValue(this.account);
+    this.router.navigate(['/users']);
+  }
+  editUser() {
+    this.router.navigate(['update/' + this.user.userId]);
   }
 
   openAccountBlock() {

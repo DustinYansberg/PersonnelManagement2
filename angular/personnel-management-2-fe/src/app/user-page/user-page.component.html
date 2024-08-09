@@ -48,6 +48,7 @@
     <ng-template pTemplate="footer">
       <div class="flex gap-3 mt-1">
         <p-button
+          (click)="editUser()"
           label="Edit"
           severity="secondary"
           class="w-full"
@@ -55,6 +56,7 @@
           [text]="true"
         />
         <p-button
+          (click)="deleteUser()"
           label="Delete"
           severity="warning"
           class="w-full"
