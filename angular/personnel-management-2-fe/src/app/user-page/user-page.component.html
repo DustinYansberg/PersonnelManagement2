@@ -1,42 +1,257 @@
+<div class="flex-box-align">
+  <p-card
+    id="card"
+    header="{{ user.lastName }}, {{ user.firstName }}"
+    subheader="User ID: {{ user.userId }}"
+    [style]="{ height: '561px', width: '360px', margin: '0.5em' }"
+  >
+    <ng-template pTemplate="header"> </ng-template>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Display Name: {{ user.displayName }}</p>
+    <p>Administrator: {{ user.administrator }}</p>
+    {{ user.managerId }}
 
-<p-card id="card" header= "{{ user.lastName }}, {{ user.firstName }}" subheader="User ID: {{ user.userId }}" [style]="{ width: '360px', margin: '0.5em' }">
-    <ng-template pTemplate="header">
-    </ng-template>
-    <p>
-        Username: {{ user.username }}
-    </p>
-    <p>
-       Email: {{ user.email }}
-    </p>
-    <p>
-        Display Name: {{ user.displayName }}
-    </p>
-    <p>
-        Administrator: {{ user.administrator }}
-    </p>
-        {{ user.managerId }}
-    
     @if(user.active){
-        <p>User is active</p>
+    <p>User is active</p>
     } @else{
-        <p>User is inactive</p>
+    <p>User is inactive</p>
     }
-    <p>
-        Department: {{ user.department }}
-    </p>
-       
+    <p>Department: {{ user.department }}</p>
 
-    
-    @for(account of userAccounts; track $index){
-    <p>
-        Account:
-        {{ account.accountAppName }}
-    </p>
-}
+    <div>
+      <div class="flex-vert-align">
+        Accounts:
+        <p-button
+          label="Add an Account"
+          severity="success"
+          [text]="true"
+          (click)="openAccountBlock()"
+        />
+      </div>
+      @if(userAccounts.length > 0){ @for(account of userAccounts; track $index){
+      @if(account.active){
+      <div class="flex-vert-align">
+        <p>
+          {{ account.accountAppName }}
+        </p>
+
+        <p-button
+          label="Delete Account"
+          severity="danger"
+          [text]="true"
+          (click)="deleteAccount(account.accountAppId)"
+        />
+      </div>
+      } } }
+    </div>
     <ng-template pTemplate="footer">
-        <div class="flex gap-3 mt-1">
-            <p-button  label="Edit" severity="secondary" class="w-full" styleClass="w-full" [text]="true" />
-            <p-button label="Delete" severity="warning" class="w-full" styleClass="w-full" [text]="true"/>
-        </div>
+      <div class="flex gap-3 mt-1">
+        <p-button
+          label="Edit"
+          severity="secondary"
+          class="w-full"
+          styleClass="w-full"
+          [text]="true"
+        />
+        <p-button
+          label="Delete"
+          severity="warning"
+          class="w-full"
+          styleClass="w-full"
+          [text]="true"
+        />
+      </div>
     </ng-template>
-</p-card>
+  </p-card>
+
+  <!-- Account form! -->
+  @if(isAccountBlockOpen){
+  <p-card
+    id="card"
+    header="Add Salesforce Account"
+    [style]="{ height: '561px', width: '360px', margin: '0.5em' }"
+  >
+    <form [formGroup]="newAccountForm">
+      <!-- <div class="formLine">
+        <label for="accountAppId">Account App ID: </label>
+        <input
+          type="text"
+          id="accountAppId"
+          name="accountAppId"
+          formControlName="accountAppId"
+        />
+      </div>
+      <div class="formLine">
+        <label for="accountUserId">Account User ID: </label>
+        <input
+          type="text"
+          id="accountUserId"
+          name="accountUserId"
+          formControlName="accountUserId"
+        />
+      </div> -->
+      <!-- <div class="formLine">
+        <label for="nativeIdentity"> Native Identity: </label>
+        <input
+          type="text"
+          id="nativeIdentity"
+          name="nativeIdentity"
+          formControlName="nativeIdentity"
+        />
+      </div> -->
+      <div class="formLine">
+        <label for="displayName">Display Name: </label>
+        <input
+          type="text"
+          id="displayName"
+          name="displayName"
+          formControlName="displayName"
+        />
+      </div>
+      <!-- <div class="formLine">
+        <label for="instanceId">Instance ID: </label>
+        <input
+          type="text"
+          id="instanceId"
+          name="instanceId"
+          formControlName="instanceId"
+        /> 
+      </div> -->
+      <div class="formLine">
+        <label for="password">Password: </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          formControlName="password"
+        />
+      </div>
+      <!-- <div class="formLine">
+        <label for="currentPassword">Current Password: </label>
+        <input
+          type="password"
+          id="currentPassword"
+          name="currentPassword"
+          formControlName="currentPassword"
+        />
+      </div> -->
+      <div class="formLine">
+        <label for="active">Active: </label>
+        <input
+          type="checkbox"
+          id="active"
+          name="active"
+          formControlName="active"
+        />
+      </div>
+      <div class="formLine">
+        <label for="locked">Locked: </label>
+        <input
+          type="checkbox"
+          id="locked"
+          name="locked"
+          formControlName="locked"
+        />
+      </div>
+      <div class="formLine">
+        <label for="manuallyCorrelated">Manually Correlated: </label>
+        <input
+          type="checkbox"
+          id="manuallyCorrelated"
+          name="manuallyCorrelated"
+          formControlName="manuallyCorrelated"
+        />
+      </div>
+      <div class="formLine">
+        <label for="hasEntitlements">Has Entitlements: </label>
+        <input
+          type="checkbox"
+          id="hasEntitlements"
+          name="hasEntitlements"
+          formControlName="hasEntitlements"
+        />
+      </div>
+      <!-- <div class="formLine">
+        <label for="accountAppName">App name: </label>
+        <input
+          type="string"
+          id="accountAppName"
+          name="accountAppName"
+          formControlName="accountAppName"
+        />
+      </div> -->
+      <div class="formLine">
+        <label for="salesforceUsername">Username: </label>
+        <input
+          type="string"
+          id="salesforceUsername"
+          name="salesforceUsername"
+          formControlName="salesforceUsername"
+        />
+      </div>
+      <div class="formLine">
+        <label for="salesforceFirstName">First Name: </label>
+        <input
+          type="string"
+          id="salesforceFirstName"
+          name="salesforceFirstName"
+          formControlName="salesforceFirstName"
+        />
+      </div>
+      <div class="formLine">
+        <label for="salesforceLastName">Last Name: </label>
+        <input
+          type="string"
+          id="salesforceLastName"
+          name="salesforceLastName"
+          formControlName="salesforceLastName"
+        />
+      </div>
+      <div class="formLine">
+        <label for="salesforceCommunityNickname">Nickname: </label>
+        <input
+          type="string"
+          id="salesforceCommunityNickname"
+          name="salesforceCommunityNickname"
+          formControlName="salesforceCommunityNickname"
+        />
+      </div>
+      <div class="formLine">
+        <label for="salesforceAlias">Alias: </label>
+        <input
+          type="string"
+          id="salesforceAlias"
+          name="salesforceAlias"
+          formControlName="salesforceAlias"
+        />
+      </div>
+      <div class="formLine">
+        <label for="salesforceEmail">Email: </label>
+        <input
+          type="string"
+          id="salesforceEmail"
+          name="salesforceEmail"
+          formControlName="salesforceEmail"
+        />
+      </div>
+
+      <p-button
+        label="Submit"
+        severity="primary"
+        class="button"
+        (click)="createAccount()"
+        [disabled]="newAccountForm.invalid"
+      />
+
+      <!-- <section id="errorMessages">
+        @if(firstName?.touched || firstName?.dirty){
+        <div>
+          {{ firstName?.errors | error : "User First Name" : 4 }}
+        </div>
+        }
+      </section> -->
+    </form>
+  </p-card>
+  }
+</div>

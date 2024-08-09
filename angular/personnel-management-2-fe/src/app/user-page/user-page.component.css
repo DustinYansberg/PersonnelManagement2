@@ -1,0 +1,11 @@
+.flex-vert-align {
+    /* justify-content: center; */
+    display: flex;
+    align-items: center;
+}
+
+.flex-box-align {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
