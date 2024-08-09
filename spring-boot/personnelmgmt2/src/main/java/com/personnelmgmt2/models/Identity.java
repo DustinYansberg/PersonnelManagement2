@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class Identity {
 	@Value("${spring.datasource.url}/Users") private static String baseUrl;
 	
+	//	Variables for details of SailPoint identities.
 	String userName;		//	Required for POST and PUT, but cannot be changed by PUT.
 	String password;
 	String firstName;
@@ -18,6 +19,7 @@ public class Identity {
 	String userType;		//	Required for POST and PUT.
 	String department;
 	
+	//	Constructor function for Identity.
 	public Identity(String userName, String password, String firstName, String lastName, String email,
 			/*String manager,*/ String managerId, String softwareVersion, /*String administrator,*/ String administratorId,
 			String displayName, boolean active, String userType, String department) {
@@ -37,8 +39,10 @@ public class Identity {
 	}
 	
 	/**
-	 * This method converts this object into a format that SCIM likes.
-	 * @return A JSON string that matches this object's variables.
+	 * toJsonString()
+	 * Converts this Identity object into a string that can be passed as a valid request body
+	 * for a request to SCIM API.
+	 * @return JSON string containing Identity details, formatted for SCIM requests
 	 */
 	public String toJsonString() {
 		String asJson = "{\r\n"

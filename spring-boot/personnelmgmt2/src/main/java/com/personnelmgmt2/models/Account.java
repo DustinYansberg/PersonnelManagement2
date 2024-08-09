@@ -5,11 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 public class Account {
 	@Value("${spring.datasource.url}") private static String baseUrl;
 
+	//	Variables for required details for accounts connected to SailPoint.
 	//	All variables below are required unless stated otherwise.
 	String accountAppId;
 //	String accountUserDisplayName;	//	Not required. Is NOT the property 'displayName' of resource 'User'.
 	String accountUserId;
-	String nativeIdentity;			//	Required in POST, must leave out of PUT.
+	String nativeIdentity;
 	String accountDisplayName;
 	String instanceId;				//	Not required, but cannot change once set.
 	String password;				//	Required?
@@ -19,10 +20,11 @@ public class Account {
 	boolean manuallyCorrelated;
 	boolean hasEntitlements;
 	
+	//	Name of connected app as specified in SCIM schema.
 	//	Because some accounts are for Salesforce and some are for Azure Entra ID.
 	String accountAppName;			//	Required. Must either be "Salesforce" or "Azure Entra ID"
 	
-	//	All of these are required for Salesforce apps.
+	//	Salesforce app variables. All of these are required for creating Salesforce apps.
 	String salesforceUsername;		//	MUST BE IN EMAIL FORM
 	String salesforceLastName;
 	String salesforceFirstName;
@@ -35,7 +37,7 @@ public class Account {
 	static final String emailEncodingKey = "UTF-8";
 	static final String languageLocaleKey = "en_US";
 
-	//	FIXME A value is required for property 'displayName' of resource 'User'.
+	//	Constructor function for Account.
 	public Account(String accountAppId, String accountUserDisplayName, String accountUserId, String nativeIdentity,
 			String accountDisplayName, String instanceId, String password, String currentPassword, boolean active,
 			boolean locked, boolean manuallyCorrelated, boolean hasEntitlements, String accountAppName,
@@ -63,6 +65,12 @@ public class Account {
 		this.salesforceEmail = salesforceEmail;
 	}
 
+	/**
+	 * toJsonString()
+	 * Converts this Account object into a string that can be passed as a valid request body
+	 * for a request to SCIM API.
+	 * @return JSON string containing Account details, formatted for SCIM requests
+	 */
 	public String toJsonString() {
 		String asJson = "{\r\n"
 			+ "  \"identity\": {\r\n"
@@ -104,8 +112,5 @@ public class Account {
 		
 		
 	}
-
-	public String getAccountUserId() {
-		return accountUserId;
-	}
+	
 }
