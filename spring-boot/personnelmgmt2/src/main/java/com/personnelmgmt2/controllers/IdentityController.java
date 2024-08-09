@@ -22,7 +22,7 @@ import com.personnelmgmt2.models.Identity;
 
 @RestController
 @RequestMapping("/identity") 
-@CrossOrigin(origins = "localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class IdentityController {
 	
 	@Value("${spring.datasource.username}") private String username;
