@@ -39,14 +39,15 @@ export class UserPageComponent {
   getUserAccountIds(accounts:any){
       for (let account of accounts){
         console.log("account "+account.value)
-        const dynamicKey4 = "urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:Salesforce:account" as keyof typeof account;
-        const accountSFValue = account[dynamicKey4];
         this.httpService.getAccountById(account.value).subscribe(
           {
             next: resp => {
               let item = resp.body;
               console.log(item)
-          this.userAccounts.push(new Account(item.application.value, item.identity.value, item.nativeIdentity, item.application.displayName, 'instanceid', 'password','currentpassword', item.active, item.locked, item.manuallyCorrelated, item.hasEntitlements,'accountappname', 'salesforceusername', 'salesforcefirstname', 'salesforcelastname', 'salesforcenickname', 'salesforcealias', 'salesforceemail'));
+              const dynamicKey5 = "urn:ietf:params:scim:schemas:sailpoint:1.0:Application:Schema:Salesforce:account" as keyof typeof item;
+      const accountNestedInfo = item[dynamicKey5];
+      console.log(accountNestedInfo)
+          this.userAccounts.push(new Account(item.application.value, item.identity.value, item.nativeIdentity, item.identity.displayName, item.id, 'password','password', item.active, item.locked, item.manuallyCorrelated, item.hasEntitlements, item.application.displayName, accountNestedInfo.Username, accountNestedInfo.FirstName, accountNestedInfo.LastName, accountNestedInfo.CommunityNickname, accountNestedInfo.Alias, accountNestedInfo.Email));
             },
             error: err => {
               console.log(err);

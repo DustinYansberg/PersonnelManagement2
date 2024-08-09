@@ -30,7 +30,7 @@ export class NewUserFormComponent {
       username: ['', Validators.required],
       displayName: ['', Validators.required],
       email: ['', Validators.compose([Validators.required, Validators.email])],
-      manager: [''],
+      managerId: [''],
       type: ['', Validators.required],
       userId: [''],
       password: ['', Validators.required],
