@@ -25,5 +25,6 @@ export class UserCardComponent {
   }
   deleteUser(){
     this.deleteUserEvent.emit(this.user.userId);
+    this.router.navigate(['users'])
   }
 }

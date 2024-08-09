@@ -26,7 +26,6 @@ export class UsersComponent {
     this.getAllUsers();
   }
   getAllUsers() {
-    //this.users = this.httpService.getAllUsers();
     this.httpService.getAllUsers().subscribe((resp) => {
       this.users = [];
       for (let item of resp.body['Resources']) {
@@ -59,6 +58,7 @@ export class UsersComponent {
         }
       }
     });
+    this.sortLastAZ();
   }
 
   deleteUser(userId: string) {
