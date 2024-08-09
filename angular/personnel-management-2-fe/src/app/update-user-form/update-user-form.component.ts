@@ -46,8 +46,7 @@ export class UpdateUserFormComponent {
       softwareVersion: ['', Validators.required],
       administrator: ['', Validators.required],
       administratorId: ['', Validators.required],
-      active: [true, Validators.required],
-      department: ['', Validators.required],
+      active: [true, Validators.required]
     });
   }
 

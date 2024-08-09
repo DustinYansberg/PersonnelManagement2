@@ -5,9 +5,11 @@
     <p>
         Username: {{ user.username }}
     </p>
+    @if(user.email){
     <p>
        Email: {{ user.email }}
     </p>
+}
     <p>
         Display Name: {{ user.displayName }}
     </p>
